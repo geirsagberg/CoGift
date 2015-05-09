@@ -55,6 +55,7 @@
     "**.vspscc"
   ],
     "scripts": {
-        "postrestore": ["npm install", "bower install"]
+        "postrestore": ["npm install", "bower install"],
+        "prebuild": ["npm build"]
     }
 }

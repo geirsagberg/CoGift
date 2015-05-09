@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "ES5"
+	},
+	"filesGlob": [
+		"./**/*.ts",
+		"!./node_modules/**/*.ts"
+	]
+}
