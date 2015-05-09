@@ -43,11 +43,13 @@
     "exclude": [
     "wwwroot",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "lib"
   ],
     "publishExclude": [
     "node_modules",
     "bower_components",
+    "lib",
     "**.xproj",
     "**.user",
     "**.vspscc"
