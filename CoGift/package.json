@@ -1,6 +1,7 @@
 {
   "version": "0.0.0",
   "name": "CoGift",
+  "private": true,
   "devDependencies": {
     "bower": "^1.4.1"
   },
