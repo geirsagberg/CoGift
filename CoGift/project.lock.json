@@ -24,7 +24,8 @@
       "Microsoft.Framework.CodeGenerators.Mvc >= 1.0.0-beta4",
       "Microsoft.Framework.Logging >= 1.0.0-beta4",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta4",
-      "Kestrel >= 1.0.0-beta4"
+      "Kestrel >= 1.0.0-beta4",
+      "SecretManager >= 1.0.0-beta4"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []
@@ -4911,6 +4912,58 @@
         "Remotion.Linq.nuspec",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.xml"
+      ]
+    },
+    "SecretManager/1.0.0-beta4": {
+      "serviceable": true,
+      "sha": "8tGD5FWx8QxnN4PkWtOqazaZ6fi4WPnjx+lZYKngcn4+9QUVFVKHzDZeDFwsCJzwcKSIonfZv9LHWBnRYJVb8g==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "Microsoft.Framework.ConfigurationModel.UserSecrets": "1.0.0-beta4",
+            "Microsoft.Framework.Logging": "1.0.0-beta4",
+            "Newtonsoft.Json": "6.0.6"
+          },
+          "frameworkAssemblies": [
+            "mscorlib",
+            "System",
+            "System.Core",
+            "Microsoft.CSharp"
+          ],
+          "runtimeAssemblies": [
+            "lib/dnx451/SecretManager.dll"
+          ],
+          "compileAssemblies": [
+            "lib/dnx451/SecretManager.dll"
+          ]
+        },
+        "DNXCore,Version=v5.0": {
+          "dependencies": {
+            "Microsoft.Framework.ConfigurationModel.UserSecrets": "1.0.0-beta4",
+            "Microsoft.Framework.Logging": "1.0.0-beta4",
+            "Newtonsoft.Json": "6.0.6",
+            "System.Console": "4.0.0-beta-22816"
+          },
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [
+            "lib/dnxcore50/SecretManager.dll"
+          ],
+          "compileAssemblies": [
+            "lib/dnxcore50/SecretManager.dll"
+          ]
+        }
+      },
+      "files": [
+        "SecretManager.1.0.0-beta4.nupkg",
+        "SecretManager.1.0.0-beta4.nupkg.sha512",
+        "SecretManager.nuspec",
+        "app/project.json",
+        "app/user-secret",
+        "app/user-secret.cmd",
+        "lib/dnx451/SecretManager.dll",
+        "lib/dnx451/SecretManager.xml",
+        "lib/dnxcore50/SecretManager.dll",
+        "lib/dnxcore50/SecretManager.xml"
       ]
     },
     "System.AppContext/4.0.0-beta-22816": {

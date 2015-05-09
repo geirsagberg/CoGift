@@ -79,10 +79,6 @@ namespace CoGift
 
             // Add MVC services to the services container.
             services.AddMvc();
-
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -114,7 +110,7 @@ namespace CoGift
 
             // Add authentication middleware to the request pipeline. You can configure options such as Id and Secret in the ConfigureServices method.
             // For more information see http://go.microsoft.com/fwlink/?LinkID=532715
-            // app.UseFacebookAuthentication();
+            app.UseFacebookAuthentication();
             // app.UseGoogleAuthentication();
             // app.UseMicrosoftAccountAuthentication();
             // app.UseTwitterAuthentication();
