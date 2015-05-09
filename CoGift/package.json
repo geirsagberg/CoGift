@@ -4,5 +4,9 @@
     "devDependencies": {
         "grunt": "0.4.5",
         "grunt-bower-task": "0.4.0"
+    },
+    "scripts": {
+        "env": "env",
+        "start": "dnx . kestrel"
     }
 }
