@@ -19,12 +19,12 @@
   "scripts": {
     "env": "env",
     "start": "dnx . kestrel",
-    "watch-css": "wr 'npm run build-css' styles/ --glob",
+    "watch-css": "wr 'npm run build-css' styles/",
     "watch-js": "watchify scripts/app.ts -p tsify -o wwwroot/bundle.js -dv",
     "watch": "npm run watch-css & npm run watch-js",
     "preprocess": "autoprefixer wwwroot/bundle.css",
-    "build-css": "lessc styles/app.less wwwroot/bundle.css --glob --clean-css",
-    "build-js": "browserify scripts/app.ts -p tsify > wwwroot/bundle.js",
-    "build": "npm run build-css & npm run build-js"
+    "build-css": "lessc --include-path=styles/ styles/app.less wwwroot/bundle.css --glob --clean-css && npm run preprocess",
+    "build-js": "browserify scripts/app.ts -p tsify -o wwwroot/bundle.js",
+    "build": "npm run build-css; npm run build-js"
   }
 }
