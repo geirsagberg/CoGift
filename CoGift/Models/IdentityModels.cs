@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Framework.OptionsModel;
+using Microsoft.AspNet.Hosting;
 
 namespace CoGift.Models
 {
@@ -19,10 +20,10 @@ namespace CoGift.Models
     {
         private static bool _created;
 
-        public ApplicationDbContext()
+        public ApplicationDbContext(IHostingEnvironment env)
         {
             // Create the database and schema if it doesn't exist
-            if (!_created)
+            if (!env.IsEnvironment("Development") && !_created)
             {
                 Database.AsRelational().ApplyMigrations();
                 _created = true;

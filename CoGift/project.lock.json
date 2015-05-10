@@ -4,14 +4,12 @@
   "projectFileDependencyGroups": {
     "": [
       "EntityFramework.SqlServer >= 7.0.0-beta4",
+      "EntityFramework.InMemory >= 7.0.0-beta4",
       "EntityFramework.Commands >= 7.0.0-beta4",
       "Microsoft.AspNet.Mvc >= 6.0.0-beta4",
       "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-beta4",
       "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-beta4",
       "Microsoft.AspNet.Authentication.Facebook >= 1.0.0-beta4",
-      "Microsoft.AspNet.Authentication.Google >= 1.0.0-beta4",
-      "Microsoft.AspNet.Authentication.MicrosoftAccount >= 1.0.0-beta4",
-      "Microsoft.AspNet.Authentication.Twitter >= 1.0.0-beta4",
       "Microsoft.AspNet.Diagnostics >= 1.0.0-beta4",
       "Microsoft.AspNet.Diagnostics.Entity >= 7.0.0-beta4",
       "Microsoft.AspNet.Identity.EntityFramework >= 3.0.0-beta4",
@@ -24,8 +22,7 @@
       "Microsoft.Framework.CodeGenerators.Mvc >= 1.0.0-beta4",
       "Microsoft.Framework.Logging >= 1.0.0-beta4",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta4",
-      "Kestrel >= 1.0.0-beta4",
-      "SecretManager >= 1.0.0-beta4"
+      "Kestrel >= 1.0.0-beta4"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []
@@ -204,6 +201,52 @@
         "lib/dnxcore50/EntityFramework.Core.xml",
         "lib/net45/EntityFramework.Core.dll",
         "lib/net45/EntityFramework.Core.xml"
+      ]
+    },
+    "EntityFramework.InMemory/7.0.0-beta4": {
+      "serviceable": true,
+      "sha": "Y0fOn2f+o9n25Ij3GXmjCuLVG1hYGhf8srll7EVNAB7NfZCxkFj7XRVxpH8qoEdS1qgCnKQY/bG86vzDgt/lvQ==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "EntityFramework.Core": "7.0.0-beta4"
+          },
+          "frameworkAssemblies": [
+            "mscorlib",
+            "System",
+            "System.Core",
+            "Microsoft.CSharp"
+          ],
+          "runtimeAssemblies": [
+            "lib/dnx451/EntityFramework.InMemory.dll"
+          ],
+          "compileAssemblies": [
+            "lib/dnx451/EntityFramework.InMemory.dll"
+          ]
+        },
+        "DNXCore,Version=v5.0": {
+          "dependencies": {
+            "EntityFramework.Core": "7.0.0-beta4"
+          },
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [
+            "lib/dnxcore50/EntityFramework.InMemory.dll"
+          ],
+          "compileAssemblies": [
+            "lib/dnxcore50/EntityFramework.InMemory.dll"
+          ]
+        }
+      },
+      "files": [
+        "EntityFramework.InMemory.7.0.0-beta4.nupkg",
+        "EntityFramework.InMemory.7.0.0-beta4.nupkg.sha512",
+        "EntityFramework.InMemory.nuspec",
+        "lib/dnx451/EntityFramework.InMemory.dll",
+        "lib/dnx451/EntityFramework.InMemory.xml",
+        "lib/dnxcore50/EntityFramework.InMemory.dll",
+        "lib/dnxcore50/EntityFramework.InMemory.xml",
+        "lib/net45/EntityFramework.InMemory.dll",
+        "lib/net45/EntityFramework.InMemory.xml"
       ]
     },
     "EntityFramework.Relational/7.0.0-beta4": {
@@ -641,96 +684,6 @@
         "lib/dnxcore50/Microsoft.AspNet.Authentication.Facebook.xml"
       ]
     },
-    "Microsoft.AspNet.Authentication.Google/1.0.0-beta4": {
-      "serviceable": true,
-      "sha": "sdwehyMZDbWvF/lV0yd/XIxMtWN3epUvJMcW9r+mZYQ3pAEiZLHQU//CDdXvZ2MuRDUXAFkfYjHCbQvuaCmdKw==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication.OAuth": "1.0.0-beta4"
-          },
-          "frameworkAssemblies": [
-            "mscorlib",
-            "System",
-            "System.Core",
-            "Microsoft.CSharp"
-          ],
-          "runtimeAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.Google.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.Google.dll"
-          ]
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication.OAuth": "1.0.0-beta4"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.Google.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.Google.dll"
-          ]
-        }
-      },
-      "files": [
-        "Microsoft.AspNet.Authentication.Google.1.0.0-beta4.nupkg",
-        "Microsoft.AspNet.Authentication.Google.1.0.0-beta4.nupkg.sha512",
-        "Microsoft.AspNet.Authentication.Google.nuspec",
-        "lib/dnx451/Microsoft.AspNet.Authentication.Google.dll",
-        "lib/dnx451/Microsoft.AspNet.Authentication.Google.xml",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.Google.dll",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.Google.xml"
-      ]
-    },
-    "Microsoft.AspNet.Authentication.MicrosoftAccount/1.0.0-beta4": {
-      "serviceable": true,
-      "sha": "ho/2XhYjtIb2VDO+JTTQWyyt5N9cL+qiEDenvdK5hSHxh3gUzZg2GGolAdN8mpntHjWb9lfai6d7eIczMW26TA==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication.OAuth": "1.0.0-beta4"
-          },
-          "frameworkAssemblies": [
-            "mscorlib",
-            "System",
-            "System.Core",
-            "Microsoft.CSharp"
-          ],
-          "runtimeAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.MicrosoftAccount.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.MicrosoftAccount.dll"
-          ]
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication.OAuth": "1.0.0-beta4",
-            "System.Dynamic.Runtime": "4.0.10-beta-22816",
-            "System.ObjectModel": "4.0.10-beta-22816"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.MicrosoftAccount.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.MicrosoftAccount.dll"
-          ]
-        }
-      },
-      "files": [
-        "Microsoft.AspNet.Authentication.MicrosoftAccount.1.0.0-beta4.nupkg",
-        "Microsoft.AspNet.Authentication.MicrosoftAccount.1.0.0-beta4.nupkg.sha512",
-        "Microsoft.AspNet.Authentication.MicrosoftAccount.nuspec",
-        "lib/dnx451/Microsoft.AspNet.Authentication.MicrosoftAccount.dll",
-        "lib/dnx451/Microsoft.AspNet.Authentication.MicrosoftAccount.xml",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.MicrosoftAccount.dll",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.MicrosoftAccount.xml"
-      ]
-    },
     "Microsoft.AspNet.Authentication.OAuth/1.0.0-beta4": {
       "serviceable": true,
       "sha": "fOJ+3E6gT8+g3dku13hZEXbZog/Iqrz2dM9jGRtK4wdpB2AOQQ7PK/6cgjxT3m/79w8eeY7q+hhT00+p2DbcJQ==",
@@ -780,53 +733,6 @@
         "lib/dnx451/Microsoft.AspNet.Authentication.OAuth.xml",
         "lib/dnxcore50/Microsoft.AspNet.Authentication.OAuth.dll",
         "lib/dnxcore50/Microsoft.AspNet.Authentication.OAuth.xml"
-      ]
-    },
-    "Microsoft.AspNet.Authentication.Twitter/1.0.0-beta4": {
-      "serviceable": true,
-      "sha": "qwlssYBOxhuoL/oqU5HjCrO0a2ffBdKCqHBQsapVRy9xUtAD4pfuFeUV21n8O4H67bVeY5TlvQ7XM4cIIrTmfg==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication": "1.0.0-beta4"
-          },
-          "frameworkAssemblies": [
-            "System.Net.Http.WebRequest",
-            "System.Net.Http",
-            "mscorlib",
-            "System",
-            "System.Core",
-            "Microsoft.CSharp"
-          ],
-          "runtimeAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.Twitter.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnx451/Microsoft.AspNet.Authentication.Twitter.dll"
-          ]
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {
-            "Microsoft.AspNet.Authentication": "1.0.0-beta4",
-            "System.Net.Http.WinHttpHandler": "4.0.0-beta-22816"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.Twitter.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnxcore50/Microsoft.AspNet.Authentication.Twitter.dll"
-          ]
-        }
-      },
-      "files": [
-        "Microsoft.AspNet.Authentication.Twitter.1.0.0-beta4.nupkg",
-        "Microsoft.AspNet.Authentication.Twitter.1.0.0-beta4.nupkg.sha512",
-        "Microsoft.AspNet.Authentication.Twitter.nuspec",
-        "lib/dnx451/Microsoft.AspNet.Authentication.Twitter.dll",
-        "lib/dnx451/Microsoft.AspNet.Authentication.Twitter.xml",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.Twitter.dll",
-        "lib/dnxcore50/Microsoft.AspNet.Authentication.Twitter.xml"
       ]
     },
     "Microsoft.AspNet.Authorization/1.0.0-beta4": {
@@ -4912,58 +4818,6 @@
         "Remotion.Linq.nuspec",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.xml"
-      ]
-    },
-    "SecretManager/1.0.0-beta4": {
-      "serviceable": true,
-      "sha": "8tGD5FWx8QxnN4PkWtOqazaZ6fi4WPnjx+lZYKngcn4+9QUVFVKHzDZeDFwsCJzwcKSIonfZv9LHWBnRYJVb8g==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {
-            "Microsoft.Framework.ConfigurationModel.UserSecrets": "1.0.0-beta4",
-            "Microsoft.Framework.Logging": "1.0.0-beta4",
-            "Newtonsoft.Json": "6.0.6"
-          },
-          "frameworkAssemblies": [
-            "mscorlib",
-            "System",
-            "System.Core",
-            "Microsoft.CSharp"
-          ],
-          "runtimeAssemblies": [
-            "lib/dnx451/SecretManager.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnx451/SecretManager.dll"
-          ]
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {
-            "Microsoft.Framework.ConfigurationModel.UserSecrets": "1.0.0-beta4",
-            "Microsoft.Framework.Logging": "1.0.0-beta4",
-            "Newtonsoft.Json": "6.0.6",
-            "System.Console": "4.0.0-beta-22816"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [
-            "lib/dnxcore50/SecretManager.dll"
-          ],
-          "compileAssemblies": [
-            "lib/dnxcore50/SecretManager.dll"
-          ]
-        }
-      },
-      "files": [
-        "SecretManager.1.0.0-beta4.nupkg",
-        "SecretManager.1.0.0-beta4.nupkg.sha512",
-        "SecretManager.nuspec",
-        "app/project.json",
-        "app/user-secret",
-        "app/user-secret.cmd",
-        "lib/dnx451/SecretManager.dll",
-        "lib/dnx451/SecretManager.xml",
-        "lib/dnxcore50/SecretManager.dll",
-        "lib/dnxcore50/SecretManager.xml"
       ]
     },
     "System.AppContext/4.0.0-beta-22816": {
