@@ -18,6 +18,7 @@
   "scripts": {
     "env": "env",
     "start": "dnx . kestrel",
+    "postinstall": "bower install",
     "watch-css": "wr 'npm run build-css' styles/",
     "watch-js": "watchify scripts/app.ts -p tsify -o wwwroot/bundle.js -dv",
     "watch": "npm run watch-css & npm run watch-js",

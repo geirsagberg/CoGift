@@ -5,7 +5,7 @@
 
 # Startup
 pkill -f kestrel
-pkill -15 screen
+pkill screen
 screen -S vnext -d -m
 screen -S vnext -p 0 -X stuff $'dnx . kestrel\n'
 
