@@ -1,66 +1,40 @@
-@inject IOptions<AppSettings> AppSettings
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
-        <link rel="stylesheet" href="~/bundle.css"></link>
-    </head>
-    <body>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : '496628183835038',
-                  xfbml      : true,
-                  version    : 'v2.3'
-                });
-            };
-            
-            (function(d, s, id){
-             var js, fjs = d.getElementsByTagName(s)[0];
-             if (d.getElementById(id)) {return;}
-             js = d.createElement(s); js.id = id;
-             js.src = "//connect.facebook.net/en_US/sdk.js";
-             fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">@AppSettings.Options.SiteTitle</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    </ul>
-                    @await Html.PartialAsync("_LoginPartial")
-                </div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
             </div>
         </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <div
-                  class="fb-like"
-                  data-share="true"
-                  data-width="450"
-                  data-show-faces="true">
-                </div>
-                <p>&copy; 2015 - @AppSettings.Options.SiteTitle</p>
-            </footer>
-        </div>
-
-        <script src="~/bundle.js"></script>
-
-        @RenderSection("scripts", required: false)
-    </body>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <address>
+            @if (@Model != null)
+            {
+                @Model.Address
+            }
+        </address>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+</body>
 </html>
