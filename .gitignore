@@ -110,9 +110,6 @@ AutoTest.Net/
 # Web workbench (sass)
 .sass-cache/
 
-# Installshield output folder
-[Ee]xpress/
-
 # DocProject is a documentation generator add-in
 DocProject/buildhelp/
 DocProject/Help/*.HxT
@@ -178,22 +175,11 @@ UpgradeLog*.htm
 *.mdf
 *.ldf
 
-# Business Intelligence projects
-*.rdl.data
-*.bim.layout
-*.bim_*.settings
-
 # Microsoft Fakes
 FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-
-# Visual Studio 6 build log
-*.plg
-
-# Visual Studio 6 workspace options file
-*.opt
 
 # Bower dependencies
 lib/
