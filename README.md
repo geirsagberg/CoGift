@@ -1,2 +1,1 @@
-[![Stories in Ready](https://badge.waffle.io/geirsagberg/cogift.png?label=ready&title=Ready)](https://waffle.io/geirsagberg/cogift)
-# CoGift
+[![Stories in Ready](https://badge.waffle.io/geirsagberg/cogift.svg?label=ready&title=Ready)](http://waffle.io/geirsagberg/cogift)
