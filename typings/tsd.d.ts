@@ -4,3 +4,4 @@
 /// <reference path="express/express.d.ts" />
 /// <reference path="gulp/gulp.d.ts" />
 /// <reference path="browserify/browserify.d.ts" />
+/// <reference path="gulp-typescript/gulp-typescript.d.ts" />

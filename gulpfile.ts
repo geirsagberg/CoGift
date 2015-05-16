@@ -7,6 +7,7 @@ var lib = require('bower-files')();
 import browserify = require('browserify');
 var tsify = require('tsify');
 var source = require('vinyl-source-stream');
+import ts = require('gulp-typescript');
 
 function cleanBowerFiles(done) {
 	del('public/lib', done);
@@ -35,9 +36,15 @@ function compileScripts() {
 		.pipe(gulp.dest('public/js'));
 }
 
+function server() {
+	return gulp.src('server.ts')
+		.pipe(ts({module: 'commonjs'})).js
+		.pipe(gulp.dest('./'));
+}
+
 gulp.task(cleanBowerFiles);
 gulp.task(copyBowerFiles);
 gulp.task(compileLess);
 gulp.task('bower', gulp.series(cleanBowerFiles, copyBowerFiles));
-gulp.task('build', gulp.parallel('bower', compileLess, compileScripts));
+gulp.task('build', gulp.parallel('bower', compileLess, compileScripts, server));
 gulp.task('default', gulp.series('build'));

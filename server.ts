@@ -3,7 +3,7 @@ import express = require('express');
 import path = require('path');
 
 var app = express();
-app.use('/', express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public"));
 
 var port = 3000;
 
