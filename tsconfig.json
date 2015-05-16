@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "ES5"
-	},
-	"filesGlob": [
-		"./frontend/scripts/**/*.ts"
-	]
+		"target": "ES5",
+		"module": "commonjs"
+	}
 }
