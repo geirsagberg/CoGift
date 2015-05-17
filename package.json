@@ -26,8 +26,7 @@
     "tsify": "^0.8.2",
     "typescript-register": "^1.1.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.1",
-    "wr": "*"
+    "watchify": "^3.2.1"
   },
   "scripts": {
     "prestart": "gulp",

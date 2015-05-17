@@ -45,6 +45,7 @@ function prepareBundler(bundler) {
 
 function processScripts(bundler) {
 	return bundler.bundle()
+		.on('error', util.log.bind(util, 'Browserify Error'))
 		.pipe(source('app.js'))
 		.pipe(gulp.dest('public/js'));
 }
