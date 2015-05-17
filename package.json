@@ -30,16 +30,9 @@
     "wr": "*"
   },
   "scripts": {
-    "env": "env",
-    "prestart": "npm run build",
+    "prestart": "gulp",
     "start": "node server.js",
-    "postinstall": "bower install",
-    "watch-css": "wr 'npm run build-css' styles/",
-    "watch-js": "watchify scripts/app.ts -p tsify -o public/bundle.js -dv",
-    "watch": "npm run watch-css & npm run watch-js",
-    "build-css": "lessc --include-path=styles:bower_components styles/app.less public/bundle.css --glob --autoprefix",
-    "build-js": "browserify scripts/app.ts -p tsify -o public/bundle.js",
-    "build": "npm run build-css; npm run build-js"
+    "postinstall": "bower install"
   },
   "dependencies": {
     "express": "^4.12.3",
