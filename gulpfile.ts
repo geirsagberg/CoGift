@@ -9,6 +9,7 @@ var tsify = require('tsify');
 var source = require('vinyl-source-stream');
 import ts = require('gulp-typescript');
 var browserSync = require('browser-sync').create();
+var debowerify = require('debowerify');
 var reload = browserSync.reload;
 
 function cleanBowerFiles(done) {
@@ -31,7 +32,8 @@ function compileLess() {
 
 function compileScripts() {
 	var bundle = browserify('scripts/app.ts')
-		.plugin('tsify')
+		.plugin(tsify)
+		.transform(debowerify)
 		.bundle();
 	
 	return bundle
@@ -57,8 +59,9 @@ function watch() {
 gulp.task(cleanBowerFiles);
 gulp.task(copyBowerFiles);
 gulp.task(compileLess);
+gulp.task(compileScripts);
 gulp.task('bower', gulp.series(cleanBowerFiles, copyBowerFiles));
 gulp.task('build:frontend', gulp.parallel('bower', compileLess, compileScripts));
 gulp.task('build', gulp.parallel('build:frontend', server))
-gulp.task(watch, gulp.series('build:frontend'));
+gulp.task('watch', gulp.series('build:frontend', watch));
 gulp.task('default', gulp.series('build'));
