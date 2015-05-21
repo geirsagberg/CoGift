@@ -9,16 +9,16 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var tsify = require('tsify');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var ts = require('gulp-typescript');
 var browserSync = require('browser-sync').create();
-var debowerify = require('debowerify');
-var deamdify = require('deamdify');
 var nodemon = require('gulp-nodemon');
-var reload = browserSync.reload;
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 
 var bundlerOptions = {
 	debug: true
-}
+};
 
 function cleanBowerFiles(done) {
 	del('public/lib', done);
@@ -38,16 +38,22 @@ function compileLess() {
 }
 
 function prepareBundler(bundler) {
-	return bundler.add('scripts/app.ts')
-		.plugin(tsify)
-		.transform(debowerify)
-		.transform(deamdify);
+	return bundler.add('scripts/app.js')
+		.transform(require('babelify').configure({
+			only: ['scripts', 'views']
+		}))
+		.transform(require('debowerify'))
+		.transform(require('deamdify'));
 }
 
 function processScripts(bundler) {
 	return bundler.bundle()
 		.on('error', util.log.bind(util, 'Browserify Error'))
 		.pipe(source('app.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(uglify())
+		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('public/js'));
 }
 
@@ -66,7 +72,7 @@ function watchScripts() {
 	return rebundle();
 }
 
-function server() {
+function buildServer() {
 	return gulp.src('server.ts')
 		.pipe(ts({ module: 'commonjs' })).js
 		.pipe(gulp.dest('./'));
@@ -91,9 +97,13 @@ function startServer(){
 		script: 'server.js',
 		ext: 'ts',
 		ignore: ['public/', 'node_modules/', 'bower_components/', 'scripts/', 'styles/'],
-		tasks: server
+		tasks: 'server',
+		execMap: {
+			js: 'node --harmony_arrow_functions'
+		}
 	});
 }
+
 
 function watchLess() {
 	gulp.watch('styles/**', gulp.series(compileLess));
@@ -105,13 +115,13 @@ gulp.task(compileLess);
 gulp.task(compileScripts);
 gulp.task(watchScripts);
 gulp.task(startServer);
-gulp.task(server);
+gulp.task(buildServer);
 gulp.task('bower', gulp.series(cleanBowerFiles, copyBowerFiles));
 gulp.task('build-frontend', gulp.parallel('bower', compileLess, compileScripts));
-gulp.task('build', gulp.parallel('build-frontend', server))
+gulp.task('build', gulp.parallel('build-frontend'))
 gulp.task('watch', gulp.series('build-frontend',
 	gulp.parallel(startBrowserSync, watchLess, watchScripts)));
-gulp.task('watch-server', gulp.series('build', startServer,
-	gulp.parallel(startBrowserSyncProxy, watchLess, watchScripts)
+gulp.task('watch-server', gulp.series('build', 
+	gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts)
 ));
 gulp.task('default', gulp.series('build'));

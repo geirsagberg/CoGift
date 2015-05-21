@@ -6,3 +6,4 @@
 /// <reference path="browserify/browserify.d.ts" />
 /// <reference path="gulp-typescript/gulp-typescript.d.ts" />
 /// <reference path="browser-sync/browser-sync.d.ts" />
+/// <reference path="react/react.d.ts" />
