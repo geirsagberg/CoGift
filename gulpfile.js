@@ -50,10 +50,10 @@ function processScripts(bundler) {
 	return bundler.bundle()
 		.on('error', util.log.bind(util, 'Browserify Error'))
 		.pipe(source('app.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({loadMaps: true}))
-		.pipe(uglify())
-		.pipe(sourcemaps.write('./'))
+		// .pipe(buffer())
+		// .pipe(sourcemaps.init({loadMaps: true}))
+		// .pipe(uglify())
+		// .pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('public/js'));
 }
 

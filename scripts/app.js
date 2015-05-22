@@ -1,11 +1,21 @@
-var $ = require('jquery');
+import $ from 'jquery';
 window['$'] = window['jQuery'] = $;
 require('bootstrap');
-var React = require('react');
-require('./views/list');
+import React from 'react';
+import List from './views/list';
+import ReactFireMixin from 'reactfire';
 
-React.render(
-	<h1>Hello world!</h1>
-	,
-	document.getElementById('main')
-);
+var gifts = ["Snowboard", "Camera", "Bed"];
+
+var App = React.createClass({
+	render(){
+		return (
+			<div>
+				<input />
+				<List gifts={gifts} />
+			</div>
+		);
+	}
+})
+
+React.render(<App />,	document.getElementById('main'));

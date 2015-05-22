@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "bootstrap": "~3.3.4",
-    "react": "~0.13.3"
+    "react": "~0.13.3",
+    "firebase": "~2.2.5",
+    "reactfire": "~0.4.0"
   }
 }
