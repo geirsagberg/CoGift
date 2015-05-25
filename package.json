@@ -40,7 +40,7 @@
   "scripts": {
     "prestart": "gulp",
     "start": "node server.js",
-    "postinstall": "bower install; gulp"
+    "postinstall": "bower install && gulp"
   },
   "dependencies": {
     "client-firebase": "^1.0.1",
