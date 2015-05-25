@@ -4,13 +4,8 @@ var path = require('path');
 var app = express();
 app.use(express.static(__dirname + "/public"));
 
-app.get('/', (request, response) => {	
-	response.end();
-});
-
 var port = 3500;
 
 var server = app.listen(port, () => {
 	console.log("Listening at http://localhost:" + port);
 });
-
