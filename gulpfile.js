@@ -32,7 +32,10 @@ function copyBowerFiles() {
 function compileLess() {
 	return gulp.src('styles/app.less')
 		.pipe(less({
-		paths: ['styles', 'bower_components', 'bower_components/bootstrap/less']
+		paths: ['styles', 
+		'bower_components', 
+		'bower_components/bootstrap/less', 
+		'bower_components/bootstrap-select/less']
 	}))
 		.pipe(gulp.dest('public/css'));
 }

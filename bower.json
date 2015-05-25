@@ -5,7 +5,8 @@
     "react": "~0.13.3",
     "bootstrap": "~3.3.4",
     "firebase": "~2.2.5",
-    "reactfire": "~0.4.0"
+    "reactfire": "~0.4.0",
+    "bootstrap-select": "~1.7.1"
   },
   "resolutions": {
     "react": "~0.13.3",
