@@ -39,7 +39,7 @@
   },
   "scripts": {
     "prestart": "gulp",
-    "start": "node server2.js",
+    "start": "node server.js",
     "postinstall": "bower install"
   },
   "dependencies": {
