@@ -16,8 +16,6 @@ var App = React.createClass({
 	mixins: [ReactFireMixin],
   componentWillMount() {
     this.listData = new Firebase('https://intense-heat-531.firebaseio.com/');
-    // this.bindAsArray(this.listData, 'gifts');
-    //this.bindAsArray(this.listData['lists'], 'lists');
   },
 
   componentWillUnmount() {
@@ -27,8 +25,7 @@ var App = React.createClass({
   getInitialState() {
     return {
       text: '',
-      gifts: [],
-      lists: []
+      gifts: []
     };
   },
 
@@ -37,7 +34,6 @@ var App = React.createClass({
   		if(error){
   			console.log('Login failed: ', error);
   		} else {
-  			console.log('Login successful: ', authData);
   			this.giftData = this.listData.child(`users/${authData.uid}`);
   			this.bindAsArray(this.giftData, 'gifts');
   			this.setState({
@@ -55,7 +51,9 @@ var App = React.createClass({
 
   onSubmit(e) {
     e.preventDefault();
-    this.giftData.push(this.state.text);
+    this.giftData.push({
+    	title: this.state.text
+    });
     this.setState({
       text: ''
     });
@@ -65,10 +63,6 @@ var App = React.createClass({
   	if (this.state.user) {
 	  	return (
 	      <div>
-	      	<select className='selectpicker'>
-	      		<option>My list #1</option>
-	      		<option>My list #2</option>
-	      	</select>
 					<form onSubmit={this.onSubmit} >
 						<input onChange={this.onChange} value={this.state.text} />
 					</form>

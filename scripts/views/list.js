@@ -6,7 +6,7 @@ export default React.createClass({
       <ul className="list">
 				{
 					this.props.gifts.map((gift, index) => 
-						<li className="gift" key={ index }>{ gift }</li>)
+						<li className="gift" key={ index }>{ gift.title }</li>)
 				}
 			</ul>
     );
