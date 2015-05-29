@@ -8,6 +8,7 @@ import List from './views/list';
 // import Firebase from 'client-firebase';
 import 'firebase';
 import ReactFireMixin from 'reactfire';
+import Cookies from 'cookies-js';
 
 // Make React DevTools work
 window.React = React;
@@ -15,11 +16,25 @@ window.React = React;
 var App = React.createClass({
 	mixins: [ReactFireMixin],
   componentWillMount() {
-    this.listData = new Firebase('https://intense-heat-531.firebaseio.com/');
+    this.firebase = new Firebase('https://intense-heat-531.firebaseio.com/');
+    this.firebase.onAuth(authData => {
+      if(authData === null){
+        this.setState({
+          user: null
+        });
+      } else {
+        this.setState({
+          user: authData.uid
+        });
+        this.giftData = this.firebase.child(`users/${authData.uid}`);
+        this.bindAsArray(this.giftData, 'gifts');
+      }
+    });
+    var authData = this.firebase.getAuth();
   },
 
   componentWillUnmount() {
-    this.listData.off();
+    this.firebase.off();
   },
 
   getInitialState() {
@@ -29,18 +44,16 @@ var App = React.createClass({
     };
   },
 
-  login() {
-  	this.listData.authWithOAuthPopup('google', (error, authData) => {
+  logIn() {
+  	this.firebase.authWithOAuthPopup('google', (error, authData) => {
   		if(error){
-  			console.log('Login failed: ', error);
-  		} else {
-  			this.giftData = this.listData.child(`users/${authData.uid}`);
-  			this.bindAsArray(this.giftData, 'gifts');
-  			this.setState({
-  				user: authData.uid
-  			});
+  			console.log('logIn failed: ', error);
   		}
   	});
+  },
+
+  logOut() {
+    this.firebase.unauth();
   },
 
   onChange(e) {
@@ -63,7 +76,10 @@ var App = React.createClass({
   	if (this.state.user) {
 	  	return (
 	      <div>
-					<form onSubmit={this.onSubmit} >
+          <button type='button' onClick={this.logOut}>
+            Log out
+          </button>
+					<form onSubmit={this.onSubmit}>
 						<input onChange={this.onChange} value={this.state.text} />
 					</form>
 					<List gifts={this.state.gifts} />
@@ -72,7 +88,7 @@ var App = React.createClass({
   	} else {
   		return (
   			<div>
-  				<button type='button' onClick={this.login} >
+  				<button type='button' onClick={this.logIn}>
   					Log in with Google
   				</button>
   			</div>
