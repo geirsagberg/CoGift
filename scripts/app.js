@@ -8,7 +8,6 @@ import List from './views/list';
 // import Firebase from 'client-firebase';
 import 'firebase';
 import ReactFireMixin from 'reactfire';
-import Cookies from 'cookies-js';
 
 // Make React DevTools work
 window.React = React;
@@ -23,11 +22,21 @@ var App = React.createClass({
           user: null
         });
       } else {
-        this.setState({
-          user: authData.uid
+        this.firebase.child(`userMappings/${authData.uid}`).once('value', value => {
+          var userId = value.val();
+          if (!userId) {
+            var user = this.firebase.child(`users`).push();
+            var userId = user.key();
+            user.child(`userMappings/${authData.provider}`).set(authData.uid);
+            this.firebase.child(`userMappings/${authData.uid}`).set(userId);
+          }
+          this.giftData = this.firebase.child(`users/${userId}/gifts`);
+
+          this.setState({
+            user: userId
+          });
+          this.bindAsArray(this.giftData, 'gifts');
         });
-        this.giftData = this.firebase.child(`users/${authData.uid}`);
-        this.bindAsArray(this.giftData, 'gifts');
       }
     });
     var authData = this.firebase.getAuth();
