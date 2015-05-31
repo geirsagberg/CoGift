@@ -12,6 +12,34 @@ import ReactFireMixin from 'reactfire';
 // Make React DevTools work
 window.React = React;
 
+var Login = React.createClass({
+  logIn() {
+    this.props.firebase.authWithOAuthPopup('google', (error, authData) => {
+      if(error){
+        console.log('logIn failed: ', error);
+      }
+    }, {
+      scope: "email"
+    });
+  },
+  logOut() {
+    this.props.firebase.unauth();
+  },
+  render() {
+    return (
+      this.props.user 
+        ? 
+        <button type='button' onClick={this.logOut}>
+          Log out
+        </button>
+        :
+        <button type='button' onClick={this.logIn}>
+          Log in with Google
+        </button>
+    );
+  }
+});
+
 var App = React.createClass({
 	mixins: [ReactFireMixin],
   componentWillMount() {
@@ -53,20 +81,6 @@ var App = React.createClass({
     };
   },
 
-  logIn() {
-  	this.firebase.authWithOAuthPopup('google', (error, authData) => {
-  		if(error){
-  			console.log('logIn failed: ', error);
-  		}
-  	}, {
-      scope: "email"
-    });
-  },
-
-  logOut() {
-    this.firebase.unauth();
-  },
-
   onChange(e) {
     this.setState({
       text: e.target.value
@@ -84,27 +98,24 @@ var App = React.createClass({
   },
 
   render() {
-  	if (this.state.user) {
-	  	return (
-	      <div>
-          <button type='button' onClick={this.logOut}>Log out</button>
-					<form onSubmit={this.onSubmit}>
-						<input onChange={this.onChange} value={this.state.text} />
-					</form>
-					<List gifts={this.state.gifts} />
+    var list;
+    if (this.state.user) {
+      list = (
+        <div>
+          <form onSubmit={this.onSubmit}>
+            <input onChange={this.onChange} value={this.state.text} />
+          </form>
+          <List gifts={this.state.gifts} />
           <button type='button' onClick={this.shareList}>Share list</button>
-				</div>
-	    );
-  	} else {
-  		return (
-  			<div>
-  				<button type='button' onClick={this.logIn}>
-  					Log in with Google
-  				</button>
-  			</div>
-  		);
-  	}
-    
+        </div>
+      );
+    }
+  	return (
+      <div>
+        <Login firebase={this.firebase} user={this.state.user} />
+        {list}
+			</div>
+    );
   }
 });
 
