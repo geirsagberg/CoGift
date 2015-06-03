@@ -12,14 +12,66 @@ import ReactFireMixin from 'reactfire';
 // Make React DevTools work
 window.React = React;
 
+var Login = React.createClass({
+  logIn() {
+    this.props.firebase.authWithOAuthPopup('google', (error, authData) => {
+      if(error){
+        console.log('logIn failed: ', error);
+      }
+    }, {
+      scope: "email"
+    });
+  },
+  logOut() {
+    this.props.firebase.unauth();
+  },
+  render() {
+    return (
+      this.props.user 
+        ? 
+        <button type='button' onClick={this.logOut}>
+          Log out
+        </button>
+        :
+        <button type='button' onClick={this.logIn}>
+          Log in with Google
+        </button>
+    );
+  }
+});
+
 var App = React.createClass({
 	mixins: [ReactFireMixin],
   componentWillMount() {
-    this.listData = new Firebase('https://intense-heat-531.firebaseio.com/');
+    this.firebase = new Firebase('https://intense-heat-531.firebaseio.com/');
+    this.firebase.onAuth(authData => {
+      if(authData === null){
+        this.setState({
+          user: null
+        });
+      } else {
+        this.firebase.child(`userMappings/${authData.uid}`).once('value', value => {
+          var userId = value.val();
+          if (!userId) {
+            var user = this.firebase.child(`users`).push();
+            var userId = user.key();
+            user.child(`userMappings/${authData.provider}`).set(authData.uid);
+            this.firebase.child(`userMappings/${authData.uid}`).set(userId);
+          }
+          this.giftData = this.firebase.child(`users/${userId}/gifts`);
+
+          this.setState({
+            user: userId
+          });
+          this.bindAsArray(this.giftData, 'gifts');
+        });
+      }
+    });
+    var authData = this.firebase.getAuth();
   },
 
   componentWillUnmount() {
-    this.listData.off();
+    this.firebase.off();
   },
 
   getInitialState() {
@@ -27,20 +79,6 @@ var App = React.createClass({
       text: '',
       gifts: []
     };
-  },
-
-  login() {
-  	this.listData.authWithOAuthPopup('google', (error, authData) => {
-  		if(error){
-  			console.log('Login failed: ', error);
-  		} else {
-  			this.giftData = this.listData.child(`users/${authData.uid}`);
-  			this.bindAsArray(this.giftData, 'gifts');
-  			this.setState({
-  				user: authData.uid
-  			});
-  		}
-  	});
   },
 
   onChange(e) {
@@ -60,25 +98,24 @@ var App = React.createClass({
   },
 
   render() {
-  	if (this.state.user) {
-	  	return (
-	      <div>
-					<form onSubmit={this.onSubmit} >
-						<input onChange={this.onChange} value={this.state.text} />
-					</form>
-					<List gifts={this.state.gifts} />
-				</div>
-	    );
-  	} else {
-  		return (
-  			<div>
-  				<button type='button' onClick={this.login} >
-  					Log in with Google
-  				</button>
-  			</div>
-  		);
-  	}
-    
+    var list;
+    if (this.state.user) {
+      list = (
+        <div>
+          <form onSubmit={this.onSubmit}>
+            <input onChange={this.onChange} value={this.state.text} />
+          </form>
+          <List gifts={this.state.gifts} />
+          <button type='button' onClick={this.shareList}>Share list</button>
+        </div>
+      );
+    }
+  	return (
+      <div>
+        <Login firebase={this.firebase} user={this.state.user} />
+        {list}
+			</div>
+    );
   }
 });
 
