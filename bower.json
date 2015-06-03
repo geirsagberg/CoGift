@@ -4,13 +4,12 @@
   "dependencies": {
     "react": "~0.13.3",
     "bootstrap": "~3.3.4",
-    "firebase": "~2.2.5",
+    "firebase": "~2.2.6",
     "reactfire": "~0.4.0",
-    "bootstrap-select": "~1.7.2",
-    "cookies-js": "~1.2.1"
+    "bootstrap-select": "~1.7.2"
   },
   "resolutions": {
     "react": "~0.13.3",
-    "firebase": "~2.2.5"
+    "firebase": "~2.2.6"
   }
 }

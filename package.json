@@ -6,7 +6,7 @@
     "react-with-addons": "./bower_components/react/react-with-addons.js"
   },
   "engines": {
-    "iojs": "2.0.1"
+    "iojs": "2.2.1"
   },
   "devDependencies": {
     "babelify": "^6.1.1",
