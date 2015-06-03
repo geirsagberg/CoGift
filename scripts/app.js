@@ -3,8 +3,9 @@ import $ from 'jquery';
 window.$ = window.jQuery = $; // Necessary for bootstrap.js
 require('bootstrap');
 require('bootstrap-select')
-import React from 'react-with-addons';
-import List from './views/list';
+import React from 'react';
+import List from './list';
+import Login from './login';
 // import Firebase from 'client-firebase';
 import 'firebase';
 import ReactFireMixin from 'reactfire';
@@ -12,40 +13,12 @@ import ReactFireMixin from 'reactfire';
 // Make React DevTools work
 window.React = React;
 
-var Login = React.createClass({
-  logIn() {
-    this.props.firebase.authWithOAuthPopup('google', (error, authData) => {
-      if(error){
-        console.log('logIn failed: ', error);
-      }
-    }, {
-      scope: "email"
-    });
-  },
-  logOut() {
-    this.props.firebase.unauth();
-  },
-  render() {
-    return (
-      this.props.user 
-        ? 
-        <button type='button' onClick={this.logOut}>
-          Log out
-        </button>
-        :
-        <button type='button' onClick={this.logIn}>
-          Log in with Google
-        </button>
-    );
-  }
-});
-
 var App = React.createClass({
-	mixins: [ReactFireMixin],
+  mixins: [ReactFireMixin],
   componentWillMount() {
     this.firebase = new Firebase('https://intense-heat-531.firebaseio.com/');
     this.firebase.onAuth(authData => {
-      if(authData === null){
+      if (authData === null) {
         this.setState({
           user: null
         });
@@ -90,7 +63,7 @@ var App = React.createClass({
   onSubmit(e) {
     e.preventDefault();
     this.giftData.push({
-    	title: this.state.text
+      title: this.state.text
     });
     this.setState({
       text: ''
@@ -98,22 +71,19 @@ var App = React.createClass({
   },
 
   render() {
-    var list;
-    if (this.state.user) {
-      list = (
-        <div>
-          <form onSubmit={this.onSubmit}>
-            <input onChange={this.onChange} value={this.state.text} />
-          </form>
-          <List gifts={this.state.gifts} />
-          <button type='button' onClick={this.shareList}>Share list</button>
-        </div>
-      );
-    }
-  	return (
+    var list = (
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <input onChange={this.onChange} value={this.state.text} />
+        </form>
+        <List gifts={this.state.gifts} />
+        <button type='button' onClick={this.shareList}>Share list</button>
+      </div>
+    );
+    return (
       <div>
         <Login firebase={this.firebase} user={this.state.user} />
-        {list}
+        {this.state.user && list}
 			</div>
     );
   }
