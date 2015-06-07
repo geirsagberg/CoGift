@@ -1,11 +1,8 @@
-'use strict';
-import $ from 'jquery';
-window.$ = window.jQuery = $; // Necessary for bootstrap.js
-require('bootstrap');
-require('bootstrap-select')
+/* global Firebase:false */
 import React from 'react';
 import List from './list';
 import Login from './login';
+import ShareListButton from './shareListButton';
 // import Firebase from 'client-firebase';
 import 'firebase';
 import ReactFireMixin from 'reactfire';
@@ -27,7 +24,7 @@ var App = React.createClass({
           var userId = value.val();
           if (!userId) {
             var user = this.firebase.child(`users`).push();
-            var userId = user.key();
+            userId = user.key();
             user.child(`userMappings/${authData.provider}`).set(authData.uid);
             this.firebase.child(`userMappings/${authData.uid}`).set(userId);
           }
@@ -40,7 +37,6 @@ var App = React.createClass({
         });
       }
     });
-    var authData = this.firebase.getAuth();
   },
 
   componentWillUnmount() {
@@ -77,7 +73,7 @@ var App = React.createClass({
           <input onChange={this.onChange} value={this.state.text} />
         </form>
         <List gifts={this.state.gifts} />
-        <button type='button' onClick={this.shareList}>Share list</button>
+        <ShareListButton user={this.state.user} />
       </div>
     );
     return (
