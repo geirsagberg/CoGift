@@ -1,21 +1,18 @@
 var gulp = require('gulp');
 var util = require('gulp-util');
-var del = require('del');
-var path = require('path');
+// var del = require('del');
 var less = require('gulp-less');
 var lib = require('bower-files')();
 var browserify = require('browserify');
 var watchify = require('watchify');
-var tsify = require('tsify');
 var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+// var buffer = require('vinyl-buffer');
+// var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var nodemon = require('gulp-nodemon');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var _ = require('lodash');
+import {assign, unique} from 'lodash';
 var NpmImportPlugin = require('less-plugin-npm-import');
-var assign = _.assign;
 
 var bundlerOptions = {
   debug: true
@@ -31,13 +28,15 @@ var bundlerOptions = {
 // }
 
 function compileLess() {
-  var paths = _.unique(lib.ext(['css', 'less']).files
+  var paths = unique(lib.ext(['css', 'less']).files
     .map(f => f.slice(0, f.lastIndexOf('/'))));
   return gulp.src('styles/app.less')
+    .pipe(sourcemaps.init())
     .pipe(less({
       paths: ['styles', ...paths],
       plugins: [new NpmImportPlugin()]
     }))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('public/css'));
 }
 
@@ -48,8 +47,6 @@ function prepareBundler(bundler) {
       only: ['scripts', 'views']
     }))
     .transform(require('debowerify'));
-  // .transform(require('deamdify'))
-  // .transform(require('deglobalify'));
 }
 
 function processScripts(bundler) {
@@ -100,15 +97,14 @@ function startServer() {
   nodemon({
     script: 'server.js',
     ignore: ['public/', 'node_modules/', 'bower_components/', 'scripts/', 'styles/'],
-    tasks: 'server',
     execMap: {
-      js: 'node'
+      js: 'npm run babel-node --'
     }
   });
 }
 
 const watchLess = gulp.series(compileLess, function watchLess() {
-  gulp.watch('styles/**', compileLess);
+  gulp.watch('styles/*.less', compileLess);
 });
 
 // gulp.task(cleanBowerFiles);
@@ -121,8 +117,6 @@ gulp.task(watchScripts);
 gulp.task(startServer);
 const build = gulp.parallel(compileLess, compileScripts);
 gulp.task('watch', gulp.parallel(startBrowserSync, watchLess, watchScripts));
-gulp.task('watchServer', gulp.series(build,
-  gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts)
-));
+gulp.task('watchServer', gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts) );
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
 gulp.task('default', build);

@@ -5,7 +5,13 @@ import Login from './login';
 import ShareListButton from './shareListButton';
 // import Firebase from 'client-firebase';
 import 'firebase';
+import sendMail from './mail';
 import ReactFireMixin from 'reactfire';
+import toastr from 'toastr';
+toastr.options = {
+  positionClass: 'toast-bottom-full-width'
+};
+require('vex').defaultOptions.className = 'vex-theme-default';
 
 // Make React DevTools work
 window.React = React;
@@ -65,7 +71,22 @@ var App = React.createClass({
       text: ''
     });
   },
-
+  onShareList(value) {
+    if (value) {
+      var emails = value.split(',').map(e => e.trim());
+      const subject = 'Shared list';
+      const body = `${this.props.user} has shared a list with you!`;
+      emails.forEach(email => {
+        sendMail({
+            to: email,
+            subject,
+            body
+          })
+          .then(() => toastr.success('Email sent to ' + email))
+          .catch(() => toastr.error('Email not sent to ' + email));
+      });
+    }
+  },
   render() {
     var list = (
       <div>
@@ -73,14 +94,14 @@ var App = React.createClass({
           <input onChange={this.onChange} value={this.state.text} />
         </form>
         <List gifts={this.state.gifts} />
-        <ShareListButton user={this.state.user} />
+        <ShareListButton onShareList={this.onShareList} />
       </div>
     );
     return (
       <div>
         <Login firebase={this.firebase} user={this.state.user} />
         {this.state.user && list}
-			</div>
+      </div>
     );
   }
 });

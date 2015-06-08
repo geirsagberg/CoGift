@@ -1,11 +1,17 @@
-var express = require('express');
-var path = require('path');
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
 
 var app = express();
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.post('/mail', (req, res) => {
+	console.log(req.body);
+	res.sendStatus(200);
+});
 
 var port = process.env.PORT || 3500;
 
-var server = app.listen(port, function() {
-	console.log("Listening at http://localhost:" + port);
+app.listen(port, function() {
+	console.log('Listening at port ' + port);
 });
