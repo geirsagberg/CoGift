@@ -4,6 +4,6 @@ export default function sendMail({to, subject, body}) {
 	return reqwest({
 		url: 'mail',
 		method: 'post',
-		data: {to, subject, body}
+		data: {to, subject, text: body}
 	});
 }
