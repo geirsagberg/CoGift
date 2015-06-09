@@ -11,6 +11,7 @@ import toastr from 'toastr';
 toastr.options = {
   positionClass: 'toast-bottom-full-width'
 };
+import {encodeHtml, decodeHtml} from './utils';
 require('vex').defaultOptions.className = 'vex-theme-default';
 
 // Make React DevTools work
@@ -82,8 +83,8 @@ var App = React.createClass({
             subject,
             body
           })
-          .then(() => toastr.success('Email sent to ' + email))
-          .catch(() => toastr.error('Email not sent to ' + email));
+          .then(() => toastr.success('Email sent to ' + encodeHtml(email)))
+          .catch(() => toastr.error('Email not sent to ' + encodeHtml(email)));
       });
     }
   },

@@ -5,8 +5,9 @@ import bodyParser from 'body-parser';
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/mail', (req, res) => {
-	console.log(req.body);
+	console.dir(req.body);
 	res.sendStatus(200);
 });
 
