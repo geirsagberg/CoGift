@@ -27,13 +27,15 @@ var bundlerOptions = {
 // 		.pipe(gulp.dest('public/fonts'));
 // }
 
+function getBowerStylePaths(){
+  return unique(lib.ext(['css', 'less']).files.map(f => f.slice(0, f.lastIndexOf('/'))));
+}
+
 function compileLess() {
-  var paths = unique(lib.ext(['css', 'less']).files
-    .map(f => f.slice(0, f.lastIndexOf('/'))));
   return gulp.src('styles/app.less')
     .pipe(sourcemaps.init())
     .pipe(less({
-      paths: ['styles', ...paths],
+      paths: ['styles', ...getBowerStylePaths()],
       plugins: [new NpmImportPlugin()]
     }))
     .pipe(sourcemaps.write('maps'))
@@ -95,7 +97,7 @@ function startBrowserSyncProxy() {
 
 function startServer() {
   nodemon({
-    script: 'server.js',
+    script: 'server/server.js',
     ignore: ['public/', 'node_modules/', 'bower_components/', 'scripts/', 'styles/'],
     execMap: {
       js: 'npm run babel-node --'

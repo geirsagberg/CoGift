@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build": "gulp",
-    "start": "babel-node server.js",
+    "start": "babel-node server/server.js",
     "postinstall": "bower install",
     "babel-node": "babel-node"
   },
