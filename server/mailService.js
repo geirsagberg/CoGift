@@ -1,11 +1,11 @@
 import nodemailer from 'nodemailer';
 
 var user = process.env.COGIFT_MAIL_USER;
-var password = process.env.COGIFT_MAIL_PASSWORD;
-if(!user){
+if (!user) {
   throw Error('COGIFT_MAIL_USER not set');
 }
-if(!password){
+var password = process.env.COGIFT_MAIL_PASSWORD;
+if (!password) {
   throw Error('COGIFT_MAIL_PASSWORD not set');
 }
 
@@ -17,11 +17,9 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-export function sendMail({
-  to, subject, text
-}) {
+export function sendMail({ to, subject, text }) {
   var mailOptions = {
-    from: process.env.COGIFT_MAIL_FROM || process.env.COGIFT_MAIL_USER,
+    from: process.env.COGIFT_MAIL_FROM || user,
     to,
     subject,
     text

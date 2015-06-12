@@ -1,8 +1,8 @@
 /* global Firebase:false */
 import React from 'react';
-import List from './list';
-import Login from './login';
-import ShareListButton from './shareListButton';
+import List from './List';
+import Login from './Login';
+import ShareListButton from './ShareListButton';
 // import Firebase from 'client-firebase';
 import 'firebase';
 import sendMail from './mail';
@@ -11,7 +11,7 @@ import toastr from 'toastr';
 toastr.options = {
   positionClass: 'toast-bottom-full-width'
 };
-import {encodeHtml, decodeHtml} from './utils';
+import {encodeHtml} from './utils';
 require('vex').defaultOptions.className = 'vex-theme-default';
 
 // Make React DevTools work
