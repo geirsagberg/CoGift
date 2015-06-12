@@ -11,8 +11,11 @@ import toastr from 'toastr';
 toastr.options = {
   positionClass: 'toast-bottom-full-width'
 };
-import {encodeHtml, decodeHtml} from './utils';
+import {encodeHtml} from './utils';
+import pace from 'pace';
 require('vex').defaultOptions.className = 'vex-theme-default';
+
+pace.start();
 
 // Make React DevTools work
 window.React = React;
@@ -38,7 +41,7 @@ var App = React.createClass({
           this.giftData = this.firebase.child(`users/${userId}/gifts`);
 
           this.setState({
-            user: userId
+            user: authData
           });
           this.bindAsArray(this.giftData, 'gifts');
         });
@@ -76,7 +79,7 @@ var App = React.createClass({
     if (value) {
       var emails = value.split(',').map(e => e.trim());
       const subject = 'Shared list';
-      const body = `${this.props.user} has shared a list with you!`;
+      const body = `${this.props.user.google.displayName} has shared a list with you!`;
       emails.forEach(email => {
         sendMail({
             to: email,

@@ -23,7 +23,13 @@
 {
 	"version": "0.1.0",
 	"command": "gulp",
-	"isShellCommand": true
+	"isShellCommand": true,
+	"tasks": [
+		{
+			"taskName": "build",
+			"problemMatcher": "$eslint-stylish" 
+		}
+	]
 }
 
 // A task runner configuration for gulp. Gulp provides a less task

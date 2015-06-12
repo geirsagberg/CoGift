@@ -121,4 +121,5 @@ const build = gulp.parallel(compileLess, compileScripts);
 gulp.task('watch', gulp.parallel(startBrowserSync, watchLess, watchScripts));
 gulp.task('watchServer', gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts) );
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
+gulp.task('build', build);
 gulp.task('default', build);
