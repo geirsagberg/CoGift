@@ -49,6 +49,10 @@ var App = React.createClass({
     });
   },
 
+  getUserRef() {
+    return this.state.user && this.firebase.child(`users/${this.state.user.uid}`);
+  },
+
   componentWillUnmount() {
     this.firebase.off();
   },
@@ -77,7 +81,10 @@ var App = React.createClass({
   },
   onShareList(value) {
     if (value) {
-      var token = Math.random().toString(36).substr(6);
+      // var token = Math.random().toString(36).substr(6);
+      var tokenRef = this.firebase.child('tokens').push();
+      tokenRef.set(this.state.user.uid);
+      var token = tokenRef.key();
       var emails = value.split(',').map(e => e.trim());
       const subject = 'Shared list';
       const body = `${this.state.user.google.displayName} has shared a list with you!\n\n` +
