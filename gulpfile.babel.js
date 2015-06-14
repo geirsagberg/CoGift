@@ -46,7 +46,7 @@ function prepareBundler(bundler) {
   return bundler.add('scripts/app.js')
     // .plugin(require('minifyify'), {map: 'app.map.json'})
     .transform(require('babelify').configure({
-      only: ['scripts', 'views']
+      only: ['scripts', 'views', 'common']
     }))
     .transform(require('debowerify'));
 }

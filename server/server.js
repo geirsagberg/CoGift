@@ -1,10 +1,7 @@
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
-import {
-  sendMail
-}
-from './mailService';
+import {sendMail} from './mailService';
 
 var app = express();
 app.use(express.static(path.join(__dirname, '../public')));
@@ -18,9 +15,9 @@ app.post('/mail', (request, response) => {
       console.log(result);
       response.send(result);
     })
-    .catch(error => {
-      console.log(error);
-      response.status(500).send(error);
+    .catch(result => {
+      console.log(result);
+      response.status(result.status === 'fail' ? 400 : 500).send(result);
     });
 });
 

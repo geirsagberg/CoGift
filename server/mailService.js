@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import { isValidEmail } from '../common/utils';
+import * as jsend from './jsend';
+import Promise from 'bluebird';
 
 var user = process.env.COGIFT_MAIL_USER;
 if (!user) {
@@ -17,20 +20,23 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-export function sendMail({ to, subject, text }) {
+export function sendMail({to, subject, text}) {
   var mailOptions = {
     from: process.env.COGIFT_MAIL_FROM || user,
     to,
     subject,
     text
   };
-  return new Promise((resolve, reject) => {
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(info.response);
-      }
-    });
+  if (!isValidEmail(to)) {
+    return Promise.reject(jsend.fail({
+      to: 'Invalid email address'
+    }));
+  }
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return Promise.reject(jsend.error(error));
+    } else {
+      return Promise.resolve(jsend.success(info.response));
+    }
   });
 }

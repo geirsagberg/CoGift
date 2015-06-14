@@ -11,11 +11,16 @@ import toastr from 'toastr';
 toastr.options = {
   positionClass: 'toast-bottom-full-width'
 };
-import {encodeHtml} from './utils';
-import pace from 'pace';
+import {encodeHtml} from '../common/utils';
+import Pace from 'pace';
 require('vex').defaultOptions.className = 'vex-theme-default';
 
-pace.start();
+Pace.options = {
+  ajax: {
+    trackMethods: ['GET', 'POST', 'DELETE', 'PUT']
+  }
+};
+Pace.start();
 
 // Make React DevTools work
 window.React = React;
@@ -95,8 +100,12 @@ var App = React.createClass({
             subject,
             body
           })
-          .then(() => toastr.success('Email sent to ' + encodeHtml(email)))
-          .catch(() => toastr.error('Email not sent to ' + encodeHtml(email)));
+          .then(() => {
+            toastr.success('Email sent to ' + encodeHtml(email));
+          })
+          .catch(error => {
+            toastr.error(`Email not sent to ${encodeHtml(email)}: ${error}`);
+          });
       });
     }
   },
