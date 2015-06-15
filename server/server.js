@@ -9,6 +9,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.get('/list/:id', (request, response) => {
+  var {id} = request.params;
+  
+});
 app.post('/mail', (request, response) => {
   sendMail(request.body)
     .then(result => {
