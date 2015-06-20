@@ -15,7 +15,7 @@ import {assign, unique} from 'lodash';
 var NpmImportPlugin = require('less-plugin-npm-import');
 
 var bundlerOptions = {
-  debug: false
+  debug: true
 };
 
 // function cleanBowerFiles(done) {
@@ -44,7 +44,7 @@ function compileLess() {
 
 function prepareBundler(bundler) {
   return bundler.add('scripts/index.js')
-    // .plugin(require('minifyify'), {map: 'index.map.json'})
+    .plugin(require('minifyify'), {map: 'index.map.json', output: 'public/js/index.map.json'})
     .transform(require('babelify').configure({
       only: ['scripts', 'views', 'common']
     }))
