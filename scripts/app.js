@@ -2,30 +2,30 @@ import React from 'react';
 import List from './List';
 import Login from './Login';
 import ShareListButton from './ShareListButton';
-// import Firebase from 'client-firebase';
 import sendMail from './mail';
 import ReactFireMixin from 'reactfire';
 import toastr from 'toastr';
 import {encodeHtml} from '../common/utils';
+import firebase from './firebase';
 
-export default React.createClass({
+const App = React.createClass({
   mixins: [ReactFireMixin],
   componentWillMount() {
-    this.props.firebase.onAuth(authData => {
+    firebase.onAuth(authData => {
       if (authData === null) {
         this.setState({
           user: null
         });
       } else {
-        this.props.firebase.child(`userMappings/${authData.uid}`).once('value', value => {
+        firebase.child(`userMappings/${authData.uid}`).once('value', value => {
           var userId = value.val();
           if (!userId) {
-            var user = this.firebase.child(`users`).push();
+            var user = firebase.child(`users`).push();
             userId = user.key();
             user.child(`userMappings/${authData.provider}`).set(authData.uid);
-            this.props.firebase.child(`userMappings/${authData.uid}`).set(userId);
+            firebase.child(`userMappings/${authData.uid}`).set(userId);
           }
-          this.giftData = this.props.firebase.child(`users/${userId}/gifts`);
+          this.giftData = firebase.child(`users/${userId}/gifts`);
 
           this.setState({
             user: authData
@@ -35,11 +35,18 @@ export default React.createClass({
       }
     });
   },
+  addGift(title) {
+    if(!this.state.user) {
+      throw new Error('User must be logged in to add gifts.');
+    }
+    var userId = this.getUserRef().key();
+    firebase.child(`users/${userId}/gifts`);
+  },
   getUserRef() {
-    return this.state.user && this.props.firebase.child(`users/${this.state.user.uid}`);
+    return this.state.user && firebase.child(`users/${this.state.user.uid}`);
   },
   componentWillUnmount() {
-    this.firebase.off();
+    firebase.off();
   },
   getInitialState() {
     return {
@@ -64,7 +71,7 @@ export default React.createClass({
   onShareList(value) {
     if (value) {
       // var token = Math.random().toString(36).substr(6);
-      var tokenRef = this.props.firebase.child('tokens').push();
+      var tokenRef = firebase.child('tokens').push();
       tokenRef.set(this.state.user.uid);
       var token = tokenRef.key();
       var emails = value.split(',').map(e => e.trim());
@@ -98,9 +105,11 @@ export default React.createClass({
     );
     return (
       <div>
-        <Login firebase={this.props.firebase} user={this.state.user} />
+        <Login firebase={firebase} user={this.state.user} />
         {this.state.user && list}
       </div>
     );
   }
 });
+
+export default App;

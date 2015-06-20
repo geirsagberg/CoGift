@@ -1,10 +1,8 @@
-/* global Firebase:false */
 import React from 'react';
 import App from './App';
-// import Firebase from 'client-firebase';
-import 'firebase';
 import toastr from 'toastr';
 import Pace from 'pace';
+import page from 'page';
 require('vex').defaultOptions.className = 'vex-theme-default';
 
 toastr.options = {
@@ -17,9 +15,13 @@ Pace.options = {
 };
 Pace.start();
 
+page('/', context => {
+
+});
+page.start();
+
 // Make React DevTools work
 window.React = React;
 
-var firebase = new Firebase('https://intense-heat-531.firebaseio.com/');
 
-React.render(<App firebase={firebase} />, document.getElementById('main'));
+React.render(<App />, document.getElementById('main'));
