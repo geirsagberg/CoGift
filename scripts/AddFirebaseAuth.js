@@ -5,6 +5,7 @@ export default (SubComponent, firebase = defaultFirebase) => class extends Compo
   constructor() {
     this.state = { user: null };
   }
+
   componentDidMount() {
     firebase.onAuth(authData => {
       if (authData === null) {
@@ -29,6 +30,7 @@ export default (SubComponent, firebase = defaultFirebase) => class extends Compo
       }
     });
   }
+  
   render(){
     return <SubComponent {...this.props} {...this.state} />;
   }

@@ -7,8 +7,37 @@ import ReactFireMixin from 'reactfire';
 import toastr from 'toastr';
 import {encodeHtml} from '../common/utils';
 import firebase from './firebase';
+import component from 'omniscient';
 
-const App = React.createClass({
+
+
+const App = component(({user, state}) => {
+  function onSubmit(e) {
+    e.preventDefault();
+    var text = state.get('text');
+    if (text) {
+      firebase.child(`users/${user.get('userId')}/gifts`).push({
+        title: text
+      });
+      state.set('text', '');
+    }
+  }
+
+  return (
+    <div>
+      <Login user={user} />
+      {user.get('authData') &&
+      <div>
+        <form onSubmit={onSubmit}>
+          <input onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
+        </form>
+        <List {...arguments} />
+      </div>}
+    </div>
+  );
+}).jsx;
+
+const App2 = React.createClass({
   mixins: [ReactFireMixin],
   componentWillMount() {
     firebase.onAuth(authData => {
@@ -70,7 +99,6 @@ const App = React.createClass({
   },
   onShareList(value) {
     if (value) {
-      // var token = Math.random().toString(36).substr(6);
       var tokenRef = firebase.child('tokens').push();
       tokenRef.set(this.state.user.uid);
       var token = tokenRef.key();

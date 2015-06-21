@@ -1,8 +1,11 @@
+import 'babel/polyfill';
 import React from 'react';
 import App from './App';
 import toastr from 'toastr';
 import Pace from 'pace';
 import page from 'page';
+import { onUpdate, structure } from './appState';
+
 require('vex').defaultOptions.className = 'vex-theme-default';
 
 toastr.options = {
@@ -24,4 +27,9 @@ page.start();
 window.React = React;
 
 
-React.render(<App />, document.getElementById('main'));
+function render() {
+	React.render(<App user={structure.cursor('user')} state={structure.cursor('state')} />, document.getElementById('main'));
+}
+
+onUpdate(render);
+render();
