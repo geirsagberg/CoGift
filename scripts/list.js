@@ -22,7 +22,7 @@ userIdRef.observe('delete', () => {
 export default component(({gifts}) =>
     <ul className="list">
 		{
-			(gifts || []).map((gift, index) =>
+      gifts.deref() && gifts.deref().map((gift, index) =>
         <li className="gift" key={ index }>{ gift.title }</li>)
 		}
 		</ul>
