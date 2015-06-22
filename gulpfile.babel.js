@@ -44,7 +44,7 @@ function compileLess() {
 
 function prepareBundler(bundler) {
   return bundler.add('scripts/index.js')
-    .plugin(require('minifyify'), {map: 'index.map.json', output: 'public/js/index.map.json'})
+    //.plugin(require('minifyify'), {map: 'index.map.json', output: 'public/js/index.map.json'})
     .transform(require('babelify').configure({
       only: ['scripts', 'views', 'common']
     }))

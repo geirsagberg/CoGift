@@ -9,33 +9,30 @@ import {encodeHtml} from '../common/utils';
 import firebase from './firebase';
 import component from 'omniscient';
 
-
-
-const App = component(({user, state}) => {
-  function onSubmit(e) {
-    e.preventDefault();
-    var text = state.get('text');
-    if (text) {
-      firebase.child(`users/${user.get('userId')}/gifts`).push({
-        title: text
-      });
-      state.set('text', '');
-    }
+function onSubmit(e, user, state) {
+  e.preventDefault();
+  var text = state.get('text');
+  if (text) {
+    firebase.child(`users/${user.get('userId')}/gifts`).push({
+      title: text
+    });
+    state.set('text', '');
   }
+}
 
-  return (
+const App = component(({user, state}) =>
+  <div>
+    <Login user={user} />
+    {user.get('authData') &&
     <div>
-      <Login user={user} />
-      {user.get('authData') &&
-      <div>
-        <form onSubmit={onSubmit}>
-          <input onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
-        </form>
-        <List {...arguments} />
-      </div>}
-    </div>
-  );
-}).jsx;
+      <div>Welcome, {user.get('authData').google.displayName}!</div>
+      <form onSubmit={e => onSubmit(e, user, state)}>
+        <input onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
+      </form>
+      <List gifts={user.cursor('gifts')} />
+    </div>}
+  </div>
+).jsx;
 
 const App2 = React.createClass({
   mixins: [ReactFireMixin],
