@@ -4,19 +4,62 @@
 @import (inline) 'npm://vex-js/css/vex-theme-default';
 @import 'npm://toastr/toastr.less';
 @import 'pace';
+@import 'colors';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
 	font-family: 'Lato', sans-serif;
-	background: white;
+	background: @cogift-background;
+  font-size: 130%;
 }
 
 .main {
 	text-align: center;
-	margin-top: 10px;
+	margin: 0 auto;
+  max-width: 320px;
+  padding: 24px 12px;
 }
 
 .list {
 	list-style: none;
 	padding: 0;
+  color: @cogift-foreground;
+  text-align: left;
+  margin: 16px 0;
 }
 
+.gift {
+  cursor: pointer;
+  padding: 2px;
+
+  &:hover {
+    background: lighten(@cogift-background, 10%);
+  }
+
+  &:active {
+    background: fadeout(@cogift-foreground, 50%);
+  }
+
+  &.selected {
+    background: fadeout(@cogift-foreground, 80%);
+  }
+}
+
+.listWrapper {
+}
+
+.giftInput {
+  width: 100%;
+  background: none;
+  border: 1px solid @cogift-foreground;
+  color: @cogift-foreground;
+}
+
+.btn {
+  background: none;
+  border: none;
+  color: @cogift-accent;
+}

@@ -1330,17 +1330,50 @@ button.toast-close-button {
     transform: rotate(360deg);
   }
 }
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Lato', sans-serif;
-  background: white;
+  background: #3c80a1;
+  font-size: 130%;
 }
 .main {
   text-align: center;
-  margin-top: 10px;
+  margin: 0 auto;
+  max-width: 320px;
+  padding: 24px 12px;
 }
 .list {
   list-style: none;
   padding: 0;
+  color: #febf63;
+  text-align: left;
+  margin: 16px 0;
+}
+.gift {
+  cursor: pointer;
+  padding: 2px;
+}
+.gift:hover {
+  background: #529bbe;
+}
+.gift:active {
+  background: rgba(254, 191, 99, 0.5);
+}
+.gift.selected {
+  background: rgba(254, 191, 99, 0.2);
+}
+.giftInput {
+  width: 100%;
+  background: none;
+  border: 1px solid #febf63;
+  color: #febf63;
+}
+.btn {
+  background: none;
+  border: none;
+  color: #ffffff;
 }
 
 /*# sourceMappingURL=maps/app.css.map */

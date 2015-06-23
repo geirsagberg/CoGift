@@ -22,15 +22,14 @@ function onSubmit(e, user, state) {
 
 const App = component(({user, state}) =>
   <div>
-    <Login user={user} />
     {user.get('authData') &&
-    <div>
-      <div>Welcome, {user.get('authData').google.displayName}!</div>
+    <div className='listWrapper'>
       <form onSubmit={e => onSubmit(e, user, state)}>
-        <input onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
+        <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
       </form>
-      <List gifts={user.cursor('gifts')} />
+      <List gifts={user.cursor('gifts')} selectedGift={state.cursor('selectedGift')} />
     </div>}
+    <Login user={user} />
   </div>
 ).jsx;
 

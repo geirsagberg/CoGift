@@ -39,13 +39,10 @@ function logOut() {
 }
 
 export default component(({user}) => {
+  let isLoggedIn = user.has('authData');
   return (
-    user.has('authData') ?
-    <button type='button' onClick={logOut}>
-        Log out
-    </button> :
-    <button type='button' onClick={logIn}>
-        Log in with Google
+    <button className='btn btn-login' type='button' onClick={isLoggedIn ? logOut : logIn}>
+        {isLoggedIn ? 'Log out' : 'Log in with Google'}
     </button>
   );
 }).jsx;

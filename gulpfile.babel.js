@@ -53,6 +53,7 @@ function prepareBundler(bundler) {
 
 function processScripts(bundler) {
   return bundler.bundle()
+    // .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
     .on('error', util.log.bind(util, 'Browserify Error'))
     .pipe(source('index.js'))
     // .pipe(buffer())
@@ -79,17 +80,19 @@ function watchScripts() {
   return rebundle();
 }
 
+var browserSyncFiles = ['public/**', '!public/**/*.map'];
+
 function startBrowserSync() {
   browserSync.init({
     server: 'public',
-    files: 'public/**',
+    files: browserSyncFiles,
     open: false
   });
 }
 
 function startBrowserSyncProxy() {
   browserSync.init({
-    files: 'public/**',
+    files: browserSyncFiles,
     proxy: 'http://localhost:3500',
     open: false
   });
@@ -115,6 +118,7 @@ const watchLess = gulp.series(compileLess, function watchLess() {
 
 gulp.task(compileLess);
 gulp.task(compileScripts);
+gulp.task('watchLess', watchLess);
 gulp.task(watchScripts);
 gulp.task(startServer);
 const build = gulp.parallel(compileLess, compileScripts);

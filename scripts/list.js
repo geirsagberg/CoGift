@@ -19,11 +19,11 @@ userIdRef.observe('delete', () => {
   unbind = null;
 });
 
-export default component(({gifts}) =>
+export default component(({gifts, selectedGift}) =>
     <ul className="list">
 		{
       gifts.deref() && gifts.deref().map((gift, index) =>
-        <li className="gift" key={ index }>{ gift.title }</li>)
+        <li className="gift { selectedGift === gift && 'selected'}" key={ index } onClick={ () => selectedGift.update(() => gift) }>{ gift.title }</li>)
 		}
 		</ul>
 ).jsx;
