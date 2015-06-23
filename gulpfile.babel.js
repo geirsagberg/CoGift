@@ -13,6 +13,8 @@ var browserSync = require('browser-sync').create();
 var nodemon = require('gulp-nodemon');
 import {assign, unique} from 'lodash';
 var NpmImportPlugin = require('less-plugin-npm-import');
+import plumber from 'gulp-plumber';
+import notify from 'gulp-notify';
 
 var bundlerOptions = {
   debug: true
@@ -51,10 +53,22 @@ function prepareBundler(bundler) {
     .transform(require('debowerify'));
 }
 
+function notifyError (description) {
+  return function () {
+    var args = [].slice.call(arguments);
+    notify.onError({
+      title: description + ' error',
+      message: '<%= error.message %>'
+    }).apply(this, args);
+    this.emit('end'); // Keep gulp from hanging on this task
+  };
+}
+
 function processScripts(bundler) {
   return bundler.bundle()
     // .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-    .on('error', util.log.bind(util, 'Browserify Error'))
+    //.on('error', util.log.bind(util, 'Browserify Error'))
+    .on('error', notifyError('Browserify'))
     .pipe(source('index.js'))
     // .pipe(buffer())
     // .pipe(sourcemaps.init({loadMaps: true}))

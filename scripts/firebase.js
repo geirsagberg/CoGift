@@ -1,13 +1,15 @@
 /* global Firebase:false */
 import 'firebase';
 import {toArray} from '../common/utils';
+import {map, assign} from 'lodash';
 
 function _bind(firebaseRef, setValue, isArray) {
   var key = firebaseRef.key();
   firebaseRef.on('value', dataSnapshot => {
     let value = dataSnapshot.val();
     if (isArray) {
-      value = toArray(value);
+      value = map(value, (obj, index) =>
+        assign({ id: index }, obj));
     }
     setValue(value);
   });

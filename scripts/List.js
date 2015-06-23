@@ -2,6 +2,7 @@ import component from 'omniscient';
 import firebase from './firebase';
 import {structure, userRef} from './appState';
 import {bindArrayToCursor} from './firebaseCursor';
+import classes from 'classnames';
 
 const userIdRef = structure.reference(['user', 'userId']);
 var unbind;
@@ -22,8 +23,8 @@ userIdRef.observe('delete', () => {
 export default component(({gifts, selectedGift}) =>
     <ul className="list">
 		{
-      gifts.deref() && gifts.deref().map((gift, index) =>
-        <li className="gift { selectedGift === gift && 'selected'}" key={ index } onClick={ () => selectedGift.update(() => gift) }>{ gift.title }</li>)
+      gifts.deref() && gifts.deref().map((gift) =>
+        <li className={classes('gift', {selected: (gift && gift.id) === (selectedGift.deref() && selectedGift.deref().id)})} key={ gift.id } onClick={ () => selectedGift.update(() => gift) }>{ gift.title }</li>)
 		}
 		</ul>
 ).jsx;
