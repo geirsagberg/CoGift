@@ -1,60 +1,51 @@
-var gulp = require('gulp');
-var util = require('gulp-util');
-// var del = require('del');
-var less = require('gulp-less');
-var lib = require('bower-files')();
-var browserify = require('browserify');
-var watchify = require('watchify');
-var source = require('vinyl-source-stream');
-// var buffer = require('vinyl-buffer');
-// var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var browserSync = require('browser-sync').create();
-var nodemon = require('gulp-nodemon');
-import {assign, unique} from 'lodash';
-var NpmImportPlugin = require('less-plugin-npm-import');
-import plumber from 'gulp-plumber';
+import gulp from 'gulp';
+import util from 'gulp-util';
+import less from 'gulp-less';
+import browserify from 'browserify';
+import watchify from 'watchify';
+import source from 'vinyl-source-stream';
+import sourcemaps from 'gulp-sourcemaps';
+import nodemon from 'gulp-nodemon';
+import { assign } from 'lodash';
+import LessNpmImport from 'less-plugin-npm-import';
+import LessCleanCss from 'less-plugin-clean-css';
+import LessAutoPrefix from 'less-plugin-autoprefix';
 import notify from 'gulp-notify';
+import compress from 'compression';
+import gulpif from 'gulp-if';
+var browserSync = require('browser-sync').create();
+
+var isProduction = process.env.NODE_ENV === 'production';
 
 var bundlerOptions = {
-  debug: true
+  debug: !isProduction
 };
-
-// function cleanBowerFiles(done) {
-// 	del('public/lib', done);
-// }
-
-// function copyBowerFiles() {
-// 	return gulp.src(lib.match('**/fonts/**').files)
-// 		.pipe(gulp.dest('public/fonts'));
-// }
-
-function getBowerStylePaths(){
-  return unique(lib.ext(['css', 'less']).files.map(f => f.slice(0, f.lastIndexOf('/'))));
-}
 
 function compileLess() {
   return gulp.src('styles/app.less')
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(isProduction, sourcemaps.init()))
     .pipe(less({
-      paths: ['styles', ...getBowerStylePaths()],
-      plugins: [new NpmImportPlugin()]
+      paths: ['styles'],
+      plugins: [new LessNpmImport(), new LessAutoPrefix(), new LessCleanCss()]
     }))
-    .pipe(sourcemaps.write('maps'))
+    .pipe(gulpif(isProduction, sourcemaps.write('maps')))
     .pipe(gulp.dest('public/css'));
 }
 
 function prepareBundler(bundler) {
   return bundler.add('scripts/index.js')
-    //.plugin(require('minifyify'), {map: 'index.map.json', output: 'public/js/index.map.json'})
+    .plugin(require('minifyify'), {
+      map: 'index.map.json',
+      output: 'public/js/index.map.json'
+    })
     .transform(require('babelify').configure({
       only: ['scripts', 'views', 'common']
     }))
     .transform(require('debowerify'));
 }
 
-function notifyError (description) {
-  return function () {
+function notifyError(description) {
+  return function() {
     var args = [].slice.call(arguments);
     notify.onError({
       title: description + ' error',
@@ -66,14 +57,8 @@ function notifyError (description) {
 
 function processScripts(bundler) {
   return bundler.bundle()
-    // .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-    //.on('error', util.log.bind(util, 'Browserify Error'))
     .on('error', notifyError('Browserify'))
     .pipe(source('index.js'))
-    // .pipe(buffer())
-    // .pipe(sourcemaps.init({loadMaps: true}))
-    // .pipe(uglify())
-    // .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('public/js'));
 }
 
@@ -98,7 +83,10 @@ var browserSyncFiles = ['public/**', '!public/**/*.map'];
 
 function startBrowserSync() {
   browserSync.init({
-    server: 'public',
+    server: {
+      baseDir: 'public',
+      middleware: [compress()]
+    },
     files: browserSyncFiles,
     open: false
   });
@@ -107,7 +95,10 @@ function startBrowserSync() {
 function startBrowserSyncProxy() {
   browserSync.init({
     files: browserSyncFiles,
-    proxy: 'http://localhost:3500',
+    proxy: {
+      target: 'http://localhost:3500',
+      middleware: [compress()]
+    },
     open: false
   });
 }
@@ -126,10 +117,6 @@ const watchLess = gulp.series(compileLess, function watchLess() {
   gulp.watch('styles/*.less', compileLess);
 });
 
-// gulp.task(cleanBowerFiles);
-// gulp.task(copyBowerFiles);
-// gulp.task('bower', gulp.series(cleanBowerFiles, copyBowerFiles));
-
 gulp.task(compileLess);
 gulp.task(compileScripts);
 gulp.task('watchLess', watchLess);
@@ -137,7 +124,7 @@ gulp.task(watchScripts);
 gulp.task(startServer);
 const build = gulp.parallel(compileLess, compileScripts);
 gulp.task('watch', gulp.parallel(startBrowserSync, watchLess, watchScripts));
-gulp.task('watchServer', gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts) );
+gulp.task('watchServer', gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts));
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
 gulp.task('build', build);
 gulp.task('default', build);

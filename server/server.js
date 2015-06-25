@@ -2,8 +2,10 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import {sendMail} from './mailService';
+import compression from 'compression';
 
 var app = express();
+app.use(compression());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -11,7 +13,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.get('/list/:id', (request, response) => {
   var {id} = request.params;
-  
 });
 app.post('/mail', (request, response) => {
   sendMail(request.body)
