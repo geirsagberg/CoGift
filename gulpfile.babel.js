@@ -18,7 +18,7 @@ var browserSync = require('browser-sync').create();
 var isProduction = process.env.NODE_ENV === 'production';
 
 var bundlerOptions = {
-  debug: true
+  debug: true // Must be true for minifyify to work
 };
 
 function compileLess() {
