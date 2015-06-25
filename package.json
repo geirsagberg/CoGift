@@ -47,7 +47,7 @@
   "scripts": {
     "build": "gulp",
     "start": "babel-node server/server.js",
-    "postinstall": "bower install",
+    "postinstall": "bower install && gulp",
     "babel-node": "babel-node",
     "eslint": "eslint"
   },
