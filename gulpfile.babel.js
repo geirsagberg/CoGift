@@ -13,6 +13,7 @@ import LessAutoPrefix from 'less-plugin-autoprefix';
 import notify from 'gulp-notify';
 import compress from 'compression';
 import gulpif from 'gulp-if';
+import del from 'del';
 var browserSync = require('browser-sync').create();
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -22,6 +23,10 @@ var bundlerOptions = {
 };
 
 const assets = ['html/**', 'favicons/**'];
+
+function clean(done) {
+  del('public', done);
+}
 
 function compileLess() {
   return gulp.src('styles/app.less')
@@ -117,6 +122,7 @@ function watchStatics() {
   gulp.watch(assets, copyStatics);
 }
 
+gulp.task(clean);
 gulp.task(compileLess);
 gulp.task(compileScripts);
 gulp.task(watchScripts);
@@ -126,6 +132,6 @@ gulp.task('watchServer', gulp.series(
   gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts, watchStatics)));
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
 
-const build = gulp.parallel(compileLess, compileScripts, copyStatics);
+const build = gulp.series(clean, gulp.parallel(compileLess, compileScripts, copyStatics));
 gulp.task('build', build);
 gulp.task('default', build);
