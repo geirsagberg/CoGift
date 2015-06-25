@@ -183,3 +183,5 @@ FakesAssemblies/
 
 # Bower dependencies
 lib/
+
+public/

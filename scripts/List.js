@@ -23,7 +23,7 @@ userIdRef.observe('delete', () => {
 export default component(({gifts, selectedGift}) =>
     <ul className="list">
 		{
-      gifts.deref() && gifts.deref().map((gift) =>
+      gifts.deref() && gifts.deref().reverse().map((gift) =>
         <li className={classes('gift', {selected: (gift && gift.id) === (selectedGift.deref() && selectedGift.deref().id)})} key={ gift.id } onClick={ () => selectedGift.update(() => gift) }>{ gift.title }</li>)
 		}
 		</ul>

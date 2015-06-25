@@ -1,17 +1,12 @@
 import component from 'omniscient';
 import firebase from './firebase';
-import { userRef, structure } from './appState';
-
-
 
 function logIn() {
   firebase.authWithOAuthPopup('google', (error) => {
     if (error) {
       console.log('logIn failed: ', error);
     }
-  }, {
-    scope: 'email'
-  });
+  }, { scope: 'email' });
 }
 
 function logOut() {

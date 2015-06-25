@@ -17,20 +17,23 @@ function onSubmit(e, user, state) {
   }
 }
 
-const App = component(({user, state}) =>
-  state.get('isInitialized') ?
-  <div>
-    {user.get('authData') &&
-    <div className='listWrapper'>
-      <form onSubmit={e => onSubmit(e, user, state)}>
-        <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
-      </form>
-      <List gifts={user.cursor('gifts')} selectedGift={state.cursor('selectedGift')} />
-    </div>}
-    <Login user={user} />
-    <ShareListButton />
-  </div> :
-  <LoadingSpinner />
-).jsx;
+const App = component(({
+  user, state
+}) => {
+  let isLoggedIn = !!user.get('authData');
+  return state.get('isInitialized') ?
+    <div>
+      {isLoggedIn && <ShareListButton />}
+      <Login user={user} />
+      {isLoggedIn &&
+      <div className='listWrapper'>
+        <form onSubmit={e => onSubmit(e, user, state)}>
+          <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
+        </form>
+        <List gifts={user.cursor('gifts')} selectedGift={state.cursor('selectedGift')} />
+      </div>}
+    </div> :
+    <LoadingSpinner />;
+}).jsx;
 
 export default App;

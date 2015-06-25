@@ -21,6 +21,8 @@ var bundlerOptions = {
   debug: true // Must be true for minifyify to work
 };
 
+const assets = ['html/**', 'favicons/**'];
+
 function compileLess() {
   return gulp.src('styles/app.less')
     .pipe(gulpif(isProduction, sourcemaps.init()))
@@ -79,18 +81,12 @@ function watchScripts() {
   return rebundle();
 }
 
-var browserSyncFiles = ['public/**', '!public/**/*.map'];
-
-function startBrowserSync() {
-  browserSync.init({
-    server: {
-      baseDir: 'public',
-      middleware: [compress()]
-    },
-    files: browserSyncFiles,
-    open: false
-  });
+function copyStatics() {
+  return gulp.src(assets)
+    .pipe(gulp.dest('public'));
 }
+
+var browserSyncFiles = ['public/**', '!public/**/*.map'];
 
 function startBrowserSyncProxy() {
   browserSync.init({
@@ -113,18 +109,23 @@ function startServer() {
   });
 }
 
-const watchLess = gulp.series(compileLess, function watchLess() {
+function watchLess() {
   gulp.watch('styles/*.less', compileLess);
-});
+}
+
+function watchStatics() {
+  gulp.watch(assets, copyStatics);
+}
 
 gulp.task(compileLess);
 gulp.task(compileScripts);
-gulp.task('watchLess', watchLess);
 gulp.task(watchScripts);
 gulp.task(startServer);
-const build = gulp.parallel(compileLess, compileScripts);
-gulp.task('watch', gulp.parallel(startBrowserSync, watchLess, watchScripts));
-gulp.task('watchServer', gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts));
+gulp.task('watchServer', gulp.series(
+  gulp.parallel(compileLess, copyStatics),
+  gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts, watchStatics)));
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
+
+const build = gulp.parallel(compileLess, compileScripts, copyStatics);
 gulp.task('build', build);
 gulp.task('default', build);
