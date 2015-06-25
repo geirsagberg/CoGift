@@ -14,6 +14,7 @@ import notify from 'gulp-notify';
 import compress from 'compression';
 import gulpif from 'gulp-if';
 import del from 'del';
+import changed from 'gulp-changed';
 var browserSync = require('browser-sync').create();
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -22,7 +23,8 @@ var bundlerOptions = {
   debug: true // Must be true for minifyify to work
 };
 
-const assets = ['html/**', 'favicons/**'];
+const ASSETS_FOLDERS = ['html/**/*.*', 'favicons/**/*.*'];
+const DEST_FOLDER = 'public';
 
 function clean(done) {
   del('public', done);
@@ -87,8 +89,9 @@ function watchScripts() {
 }
 
 function copyStatics() {
-  return gulp.src(assets)
-    .pipe(gulp.dest('public'));
+  return gulp.src(ASSETS_FOLDERS)
+    .pipe(changed(DEST_FOLDER))
+    .pipe(gulp.dest(DEST_FOLDER));
 }
 
 var browserSyncFiles = ['public/**', '!public/**/*.map'];
@@ -119,7 +122,7 @@ function watchLess() {
 }
 
 function watchStatics() {
-  gulp.watch(assets, copyStatics);
+  gulp.watch(ASSETS_FOLDERS, copyStatics);
 }
 
 gulp.task(clean);
@@ -127,8 +130,8 @@ gulp.task(compileLess);
 gulp.task(compileScripts);
 gulp.task(watchScripts);
 gulp.task(startServer);
-gulp.task('watchServer', gulp.series(
-  gulp.parallel(compileLess, copyStatics),
+gulp.task(copyStatics);
+gulp.task('watchServer', gulp.series(copyStatics, compileLess,
   gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts, watchStatics)));
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
 
