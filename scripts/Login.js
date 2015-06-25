@@ -1,12 +1,13 @@
 import component from 'omniscient';
 import firebase from './firebase';
-import { userRef } from './appState';
+import { userRef, structure } from './appState';
 
 firebase.onAuth(authData => {
   const userCursor = userRef.cursor();
   if (authData) {
     // Find existing user by provider-spesific uid
     firebase.child(`userMappings/${authData.uid}`).once('value', value => {
+      structure.cursor('state').set('isInitialized', true);
       let userId = value.val();
       if (!userId) {
         // Add new user mapped to provider
@@ -19,6 +20,7 @@ firebase.onAuth(authData => {
       userCursor.set('userId', userId);
     });
   } else {
+    structure.cursor('state').set('isInitialized', true);
     userCursor.delete('authData');
     userCursor.delete('userId');
   }

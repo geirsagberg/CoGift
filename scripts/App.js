@@ -8,6 +8,7 @@ import toastr from 'toastr';
 import {encodeHtml} from '../common/utils';
 import firebase from './firebase';
 import component from 'omniscient';
+import LoadingSpinner from './LoadingSpinner';
 
 function onSubmit(e, user, state) {
   e.preventDefault();
@@ -21,6 +22,7 @@ function onSubmit(e, user, state) {
 }
 
 const App = component(({user, state}) =>
+  state.get('isInitialized') ?
   <div>
     {user.get('authData') &&
     <div className='listWrapper'>
@@ -30,7 +32,8 @@ const App = component(({user, state}) =>
       <List gifts={user.cursor('gifts')} selectedGift={state.cursor('selectedGift')} />
     </div>}
     <Login user={user} />
-  </div>
+  </div> :
+  <LoadingSpinner />
 ).jsx;
 
 const App2 = React.createClass({
