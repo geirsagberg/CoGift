@@ -35,7 +35,7 @@ function compileLess() {
 function prepareBundler(bundler) {
   return bundler.add('scripts/index.js')
     .plugin(require('minifyify'), {
-      map: 'index.map.json',
+      map: !isProduction && 'index.map.json',
       output: 'public/js/index.map.json'
     })
     .transform(require('babelify').configure({
