@@ -18,7 +18,7 @@ var browserSync = require('browser-sync').create();
 var isProduction = process.env.NODE_ENV === 'production';
 
 var bundlerOptions = {
-  debug: !isProduction
+  debug: true
 };
 
 function compileLess() {
