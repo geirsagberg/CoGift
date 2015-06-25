@@ -9,7 +9,7 @@ import nodemon from 'gulp-nodemon';
 import { assign } from 'lodash';
 import LessNpmImport from 'less-plugin-npm-import';
 import LessCleanCss from 'less-plugin-clean-css';
-import LessAutoPrefix from 'less-plugin-autoprefix';
+import autoprefixer from 'gulp-autoprefixer';
 import notify from 'gulp-notify';
 import compress from 'compression';
 import gulpif from 'gulp-if';
@@ -18,6 +18,8 @@ import changed from 'gulp-changed';
 var browserSync = require('browser-sync').create();
 
 var isProduction = process.env.NODE_ENV === 'production';
+
+util.log(`Production: ${isProduction}`);
 
 var bundlerOptions = {
   debug: true // Must be true for minifyify to work
@@ -32,25 +34,29 @@ function clean(done) {
 
 function compileLess() {
   return gulp.src('styles/app.less')
-    .pipe(gulpif(isProduction, sourcemaps.init()))
+    .pipe(gulpif(!isProduction, sourcemaps.init()))
     .pipe(less({
       paths: ['styles'],
-      plugins: [new LessNpmImport(), new LessAutoPrefix(), new LessCleanCss()]
+      plugins: [new LessNpmImport(), new LessCleanCss()]
     }))
-    .pipe(gulpif(isProduction, sourcemaps.write('maps')))
+    .pipe(autoprefixer())
+    .pipe(gulpif(!isProduction, sourcemaps.write('maps')))
     .pipe(gulp.dest('public/css'));
 }
 
 function prepareBundler(bundler) {
-  return bundler.add('scripts/index.js')
-    .plugin(require('minifyify'), {
-      map: !isProduction && 'index.map.json',
-      output: 'public/js/index.map.json'
-    })
+  bundler.add('scripts/index.js')
     .transform(require('babelify').configure({
       only: ['scripts', 'views', 'common']
     }))
     .transform(require('debowerify'));
+  if (isProduction) {
+    bundler.plugin(require('minifyify'), {
+      map: !isProduction && 'index.map.json',
+      output: 'public/js/index.map.json'
+    });
+  }
+  return bundler;
 }
 
 function notifyError(description) {

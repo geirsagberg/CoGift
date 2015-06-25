@@ -21,6 +21,7 @@
     "debowerify": "^1.2.1",
     "del": "^1.1.1",
     "gulp": "gulpjs/gulp#4.0",
+    "gulp-autoprefixer": "^2.3.1",
     "gulp-changed": "^1.2.1",
     "gulp-if": "^1.2.5",
     "gulp-less": "^3.0.3",
@@ -51,6 +52,7 @@
     "eslint": "eslint"
   },
   "dependencies": {
+    "autoprefixer": "^5.2.0",
     "babel": "^5.5.4",
     "bluebird": "^2.9.30",
     "body-parser": "^1.12.4",

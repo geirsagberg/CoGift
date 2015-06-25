@@ -14,17 +14,22 @@ userIdRef.observe('add', () => {
 });
 
 userIdRef.observe('delete', () => {
-  if(unbind) {
+  if (unbind) {
     unbind();
   }
   unbind = null;
 });
 
-export default component(({gifts, selectedGift}) =>
-    <ul className="list">
-		{
-      gifts.deref() && gifts.deref().reverse().map((gift) =>
-        <li className={classes('gift', {selected: (gift && gift.id) === (selectedGift.deref() && selectedGift.deref().id)})} key={ gift.id } onClick={ () => selectedGift.update(() => gift) }>{ gift.title }</li>)
-		}
-		</ul>
-).jsx;
+export default component(({gifts, selectedGift}) => {
+  const isSelected = gift => (gift && gift.id) === (selectedGift.deref() && selectedGift.deref().id);
+  return <ul className="list">
+    {
+      gifts.deref() && gifts.deref().map((gift) =>
+        <li className={classes('gift', {selected: isSelected(gift)})}
+          key={gift.id}
+          onClick={() => selectedGift.update(() => isSelected(gift) ? undefined : gift)}>
+          {gift.title}
+        </li>)
+    }
+  </ul>;
+}).jsx;
