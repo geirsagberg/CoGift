@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import {sendMail} from './mailService';
 import compression from 'compression';
 import morgan from 'morgan';
-import pretty from 'prettysize';
 
 var app = express();
 app.use(compression());
