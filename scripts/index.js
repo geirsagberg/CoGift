@@ -4,7 +4,10 @@ import App from './App';
 import toastr from 'toastr';
 import Pace from 'pace';
 import page from 'page';
-import { onUpdate, structure } from './appState';
+import { onUpdate, userRef, stateRef } from './appState';
+
+// Make React DevTools work
+window.React = React;
 
 require('vex').defaultOptions.className = 'vex-theme-default';
 
@@ -18,18 +21,13 @@ Pace.options = {
 };
 Pace.start();
 
-page('/', context => {
-
-});
-page.start();
-
-// Make React DevTools work
-window.React = React;
-
-
 function render() {
-	React.render(<App user={structure.cursor('user')} state={structure.cursor('state')} />, document.getElementById('main'));
+  React.render(<App user={userRef.cursor()}
+    state={stateRef.cursor()} />, document.getElementById('main'));
 }
-
 onUpdate(render);
-render();
+
+page('/list/:id', context =>
+  stateRef.cursor().set('listId', context.params.id));
+page('/*', render);
+page.start();

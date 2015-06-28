@@ -25,6 +25,7 @@ const App = component(({
     <div>
       {isLoggedIn && <ShareListButton />}
       <Login user={user} />
+    {/*<div>List ID: {state.get('listId')}</div>*/}
       {isLoggedIn &&
       <div className='listWrapper'>
         <form onSubmit={e => onSubmit(e, user, state)}>

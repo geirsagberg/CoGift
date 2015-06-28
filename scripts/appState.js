@@ -8,4 +8,6 @@ export function onUpdate(callback) {
 
 export const userRef = structure.reference('user');
 
-export default { onUpdate, userRef, structure };
+export const stateRef = structure.reference('state');
+
+export default { onUpdate, userRef, stateRef, structure };
