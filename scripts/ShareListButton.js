@@ -5,6 +5,7 @@ import { userRef } from './appState';
 import sendMail from './mail';
 import toastr from 'toastr';
 import { encodeHtml } from '../common/utils';
+import urlJoin from 'url-join';
 
 function shareList(value) {
   if (!value) {
@@ -17,7 +18,7 @@ function shareList(value) {
   const emails = value.split(',').map(e => e.trim());
   const subject = 'Shared list';
   const body = `${userRef.cursor('authData').deref().google.displayName} has shared a list with you!\n\n` +
-    `Go to ${window.location.href}${token} to see the list.`;
+    `Go to ${urlJoin(window.location.origin, 'list', token)} to see the list.`;
   emails.forEach(email => {
     sendMail({
         to: email,

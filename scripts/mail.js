@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 export default function sendMail({to, subject, body}) {
-	return Promise.resolve($.post('mail', {to, subject, body}))
+	return Promise.resolve($.post('/mail', {to, subject, body}))
 		.catch(xhr => {
 			var json = xhr.responseJSON;
 			if(json.status === 'fail'){
