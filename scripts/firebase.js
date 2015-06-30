@@ -1,6 +1,4 @@
-/* global Firebase:false */
-import 'firebase';
-import {toArray} from '../common/utils';
+import Firebase from 'firebase';
 import {map, assign} from 'lodash';
 
 function _bind(firebaseRef, setValue, isArray) {

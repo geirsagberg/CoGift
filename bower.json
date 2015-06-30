@@ -1,9 +1,7 @@
 {
   "name": "CoGift",
   "private": true,
-  "dependencies": {
-    "firebase": "~2.2.7"
-  },
+  "dependencies": {},
   "resolutions": {
     "react": "~0.13.3",
     "firebase": "~2.2.7"
