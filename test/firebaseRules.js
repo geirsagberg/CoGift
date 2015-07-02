@@ -60,13 +60,18 @@ before(() => {
 });
 
 describe('Firebase Security Rules', () => {
-  it('should deny unauthorized access', () => {
+  it('should deny unauthenticated access', () => {
     expect(targaryen.users.unauthenticated).cannot.read.path('users/user_1/gifts/gift_1/title');
   });
   it('should allow an authenticated login to create a user', () => {
-    expect(targaryen.users.google).can.write.to.path('users/user_1');
+    expect({uid: 'google:1', provider: 'google'}).can.write.to.path('users/user_1');
   });
   it('should not allow users to write to other users', () => {
-    expect({uid: 'google:2'}).cannot.write.to.path('users/user_1');
+    expect({uid: 'google:2', provider: 'google'}).cannot.write.to.path('users/user_1');
+  });
+  it('should validate tokens', () => {
+    expect({uid: 'google:1', provider: 'google'}).can.write('google:1').to.path('tokens/1');
+    expect({uid: 'google:1', provider: 'google'}).cannot.write('google:2').to.path('tokens/1');
+    expect({uid: 'google:1', provider: 'google'}).cannot.write({something: 'else'}).to.path('tokens/1');
   });
 });
