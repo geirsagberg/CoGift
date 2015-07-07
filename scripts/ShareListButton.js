@@ -1,6 +1,6 @@
 import component from 'omniscient';
 import dialog from 'vex.dialog';
-import firebase from './firebase';
+import firebase from '../common/firebase';
 import { userRef } from './appState';
 import sendMail from './mail';
 import toastr from 'toastr';

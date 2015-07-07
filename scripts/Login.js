@@ -1,5 +1,5 @@
 import component from 'omniscient';
-import firebase from './firebase';
+import firebase from '../common/firebase';
 
 function logIn() {
   firebase.authWithOAuthPopup('google', (error) => {

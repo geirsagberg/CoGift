@@ -1,9 +1,11 @@
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
-import {sendMail} from './mailService';
 import compression from 'compression';
 import morgan from 'morgan';
+import firebaseMailer from './firebaseMailer';
+
+firebaseMailer.init();
 
 var app = express();
 app.use(compression());
@@ -15,17 +17,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.get('/list/:id', (request, response) => {
   response.sendFile('index.html', {root: './public'});
-});
-app.post('/mail', (request, response) => {
-  sendMail(request.body)
-    .then(result => {
-      console.log(result);
-      response.send(result);
-    })
-    .catch(result => {
-      console.log(result);
-      response.status(result.status === 'fail' ? 400 : 500).send(result);
-    });
 });
 
 var port = process.env.PORT || 3500;

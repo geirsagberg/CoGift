@@ -1,5 +1,5 @@
 import component from 'omniscient';
-import firebase from './firebase';
+import firebase from '../common/firebase';
 import {structure, userRef} from './appState';
 import {bindArrayToCursor} from './firebaseCursor';
 import classes from 'classnames';

@@ -1,7 +1,7 @@
 import List from './List';
 import Login from './Login';
 import ShareListButton from './ShareListButton';
-import firebase from './firebase';
+import firebase from '../common/firebase';
 import component from 'omniscient';
 import LoadingSpinner from './LoadingSpinner';
 import './firebaseAuth';
