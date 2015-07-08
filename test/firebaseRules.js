@@ -4,9 +4,9 @@ import request from 'request-promise';
 chai.use(targaryen.chai);
 import FirebaseTokenGenerator from 'firebase-token-generator';
 
-var secret = process.env.FIREBASE_SECRET;
+var secret = process.env.COGIFT_FIREBASE_SECRET;
 if (!secret) {
-  throw new Error('process.env.FIREBASE_SECRET must be set');
+  throw new Error('process.env.COGIFT_FIREBASE_SECRET must be set');
 }
 
 const tokenGenerator = new FirebaseTokenGenerator(secret);

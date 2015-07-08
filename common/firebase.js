@@ -1,5 +1,8 @@
 import Firebase from 'firebase';
+import Fireproof from 'fireproof';
 import {map, assign} from 'lodash';
+import bluebird from 'bluebird';
+Fireproof.bless(bluebird);
 
 function _bind(firebaseRef, setValue, isArray) {
   var key = firebaseRef.key();
@@ -28,4 +31,4 @@ export function bindAsObject(firebaseRef, setValue) {
   return _bind(firebaseRef, setValue, false);
 }
 
-export default new Firebase('https://intense-heat-531.firebaseio.com/');
+export default new Fireproof(new Firebase('https://intense-heat-531.firebaseio.com/'));

@@ -22,11 +22,11 @@
 
 {
 	"version": "0.1.0",
-	"command": "gulp",
+	"command": "npm",
 	"isShellCommand": true,
 	"tasks": [
 		{
-			"taskName": "build",
+			"taskName": "test",
 			"problemMatcher": "$eslint-stylish" 
 		}
 	]
