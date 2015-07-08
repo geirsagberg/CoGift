@@ -34,9 +34,9 @@ export function sendMail({to, subject, text}) {
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return reject(jsend.error(error));
+        reject(jsend.error(error));
       } else {
-        return resolve(jsend.success(info.response));
+        resolve(jsend.success(info.response));
       }
     });
   });

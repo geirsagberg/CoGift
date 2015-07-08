@@ -8,28 +8,26 @@ chai.should();
 const mail = {to: 'test@test.com', subject: 'Subject', body: 'Body'};
 
 describe('Mail sender', () => {
-  var xhr, requests, stub;
+  var xhr, requests;
 
   before(() => {
     xhr = sinon.useFakeXMLHttpRequest();
     requests = [];
     xhr.onCreate = requests.push;
-    stub = sinon.stub(firebaseRef, 'child', () => {
-      return { push: () => Promise.resolve(true) };
-    });
+    // Stub firebaseRef.child('mails').push()
   });
 
   after(() => {
     xhr.restore();
-    stub.restore();
   });
 
   it('sends mail and returns a promise', () => {
-    firebaseRef.should.be.instanceOf(Fireproof);
-    return sendMail(mail).should.eventually.be.true;
-  });
+    sinon.stub(firebaseRef, 'child', () => {
+      return { push: () => Promise.resolve(true) };
+    });
 
-  it('fails if no contact with Firebase', () => {
-    return sendMail(mail).should.eventually.equal('error');
+    firebaseRef.should.be.instanceOf(Fireproof);
+
+    return sendMail(mail).should.eventually.be.true;
   });
 });

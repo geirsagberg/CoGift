@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import morgan from 'morgan';
 import firebaseMailer from './firebaseMailer';
+import './firebaseAuth';
 
 firebaseMailer.init();
 
