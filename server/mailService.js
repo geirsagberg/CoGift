@@ -19,12 +19,12 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-export function sendMail({to, subject, text}) {
+export function sendMail({to, subject, body}) {
   var mailOptions = {
     from: process.env.COGIFT_MAIL_FROM || user,
     to,
     subject,
-    text
+    body
   };
   if (!isValidEmail(to)) {
     return Promise.reject(jsend.fail({

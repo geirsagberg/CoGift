@@ -3,10 +3,8 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import morgan from 'morgan';
-import firebaseMailer from './firebaseMailer';
+import './firebaseJobs';
 import './firebaseAuth';
-
-firebaseMailer.init();
 
 var app = express();
 app.use(compression());

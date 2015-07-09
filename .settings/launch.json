@@ -20,7 +20,13 @@
 			"runtimeExecutable": "node_modules/mocha/bin/mocha",
 			// Environment variables passed to the program.
 			"env": { }
-		}, 
+		},
+		{
+			"name": "Server",
+			"type": "node",
+			"program": "server/server.js",
+			"stopOnEntry": true
+		},
 		{
 			"name": "Attach",
 			"type": "node",

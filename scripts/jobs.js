@@ -1,6 +1,8 @@
 import firebaseRef from '../common/firebase';
 import {userRef} from './appState';
+const jobs = firebaseRef.child('jobs');
 
-export default function shareList({to, token}) {
-  return firebaseRef.child('methods').push({method: 'shareMail', to, token, userId: userRef.cursor().get('userId')});
+export function shareList({to, token}) {
+  const job = {name: 'shareList', to, token, userId: userRef.cursor().get('userId')};
+  return jobs.push(job);
 }

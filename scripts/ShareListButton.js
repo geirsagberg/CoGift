@@ -2,7 +2,7 @@ import component from 'omniscient';
 import dialog from 'vex.dialog';
 import firebase from '../common/firebase';
 import {userRef} from './appState';
-import {sendMail} from './jobs';
+import * as jobs from './jobs';
 
 function shareList(value) {
   if (!value) {
@@ -10,11 +10,13 @@ function shareList(value) {
   }
 
   const tokenRef = firebase.child('tokens').push();
-  tokenRef.set(userRef.cursor('userId').deref());
-  const token = tokenRef.key();
-  const emails = value.split(',').map(e => e.trim());
-  emails.forEach(email => {
-    sendMail({to: email, token});
+  tokenRef.set(userRef.cursor('userId').deref())
+  .then(() => {
+    const token = tokenRef.key();
+    const emails = value.split(',').map(e => e.trim());
+    emails.forEach(email => {
+      jobs.shareList({to: email, token});
+    });
   });
 }
 
