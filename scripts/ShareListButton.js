@@ -1,22 +1,14 @@
 import component from 'omniscient';
 import dialog from 'vex.dialog';
-import firebase from '../common/firebase';
-import {userRef} from './appState';
 import * as jobs from './jobs';
 
 function shareList(value) {
   if (!value) {
     return;
   }
-
-  const tokenRef = firebase.child('tokens').push();
-  tokenRef.set(userRef.cursor('userId').deref())
-  .then(() => {
-    const token = tokenRef.key();
-    const emails = value.split(',').map(e => e.trim());
-    emails.forEach(email => {
-      jobs.shareList({to: email, token});
-    });
+  const emails = value.split(',').map(e => e.trim());
+  emails.forEach(email => {
+    jobs.shareList({to: email});
   });
 }
 

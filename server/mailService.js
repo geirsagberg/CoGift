@@ -24,7 +24,7 @@ export function sendMail({to, subject, body}) {
     from: process.env.COGIFT_MAIL_FROM || user,
     to,
     subject,
-    body
+    text: body
   };
   if (!isValidEmail(to)) {
     return Promise.reject(jsend.fail({

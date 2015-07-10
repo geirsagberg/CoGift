@@ -19,16 +19,20 @@ function onSubmit(e, user, state) {
 
 const App = component(({user, state}) => {
   const isLoggedIn = !!user.get('authData');
+  const isOwner = isLoggedIn && (!state.get('listId') || state.get('listId') === user.get('userId'));
+  const gifts = state.cursor('gifts');
+
   return state.get('isInitialized') ?
     <div>
       {isLoggedIn && <ShareListButton />}
       <Login user={user} />
       {isLoggedIn &&
       <div className='listWrapper'>
+        {isOwner &&
         <form onSubmit={e => onSubmit(e, user, state)}>
           <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
-        </form>
-        <List gifts={user.cursor('gifts')} selectedGift={state.cursor('selectedGift')} />
+        </form>}
+        <List gifts={gifts} selectedGift={state.cursor('selectedGift')} />
       </div>}
     </div> :
     <LoadingSpinner />;

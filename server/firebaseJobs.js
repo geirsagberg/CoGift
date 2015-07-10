@@ -5,7 +5,7 @@ import urlJoin from 'url-join';
 
 const jobs = firebaseRef.child('jobs');
 
-function shareList({token, to, userId}, jobRef) {
+function shareList({to, userId}, jobRef) {
   const userRef = firebaseRef.child(`users/${userId}`);
   userRef.once('value')
     .then(data => {
@@ -13,7 +13,7 @@ function shareList({token, to, userId}, jobRef) {
       const user = data.val();
       const name = user.displayName;
       const subject = `${name} has shared a wishlist with you`;
-      const listUrl = urlJoin(serverUrl, 'list', token);
+      const listUrl = urlJoin(serverUrl, 'list', userId);
       const body = `${name} has shared a wishlist with you.\n\nGo to ${listUrl} to see the list.`;
       return sendMail({to: to, subject, body});
     })
