@@ -11,15 +11,9 @@ function logIn() {
   }, options);
 }
 
-function logOut() {
-  firebase.unauth();
-}
-
-export default component(({user}) => {
-  const isLoggedIn = user.has('authData');
-  return (
-    <button className='btn btn-login' type='button' onClick={isLoggedIn ? logOut : logIn}>
-        {isLoggedIn ? 'Log out' : 'Log in with Google'}
+export default component(() =>
+    <button className='btn btn-login' type='button' onClick={logIn}>
+        Log in with Google
     </button>
-  );
-}).jsx;
+).jsx;
+
