@@ -5,6 +5,7 @@ import firebase from '../common/firebase';
 import component from 'omniscient';
 import LoadingSpinner from './LoadingSpinner';
 import './firebaseAuth';
+import * as utils from './utils';
 
 function onSubmit(e, user, state) {
   e.preventDefault();
@@ -18,20 +19,24 @@ function onSubmit(e, user, state) {
 }
 
 const App = component(({user, state}) => {
-  const isLoggedIn = !!user.get('authData');
-  const isOwner = isLoggedIn && (!state.get('listId') || state.get('listId') === user.get('userId'));
+  const isLoggedIn = utils.isLoggedIn(user);
+  const isOwner = utils.isOwner(user, state);
   const gifts = state.cursor('gifts');
+  const userName = !isOwner && state.get('listOwner');
 
   return state.get('isInitialized') ?
     <div>
-      {isLoggedIn && <ShareListButton />}
+      {isOwner && <ShareListButton />}
+      {!isLoggedIn &&
+      <div>To see {userName}´s list, please log in.</div>}
       <Login user={user} />
       {isLoggedIn &&
       <div className='listWrapper'>
-        {isOwner &&
+        {isOwner ?
         <form onSubmit={e => onSubmit(e, user, state)}>
           <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
-        </form>}
+        </form> :
+        <div>{userName}´s wish list</div>}
         <List gifts={gifts} selectedGift={state.cursor('selectedGift')} />
       </div>}
     </div> :

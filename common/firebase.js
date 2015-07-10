@@ -9,8 +9,7 @@ function _bind(firebaseRef, setValue, isArray) {
   firebaseRef.on('value', dataSnapshot => {
     let value = dataSnapshot.val();
     if (isArray) {
-      value = map(value, (obj, index) =>
-        assign({ id: index }, obj));
+      value = map(value, (obj, index) => assign({ id: index }, obj));
     }
     setValue(value);
   });

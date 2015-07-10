@@ -5,6 +5,7 @@ import toastr from 'toastr';
 import Pace from 'pace';
 import page from 'page';
 import { onUpdate, userRef, stateRef } from './appState';
+import { bindMyList, bindSharedList, bindListOwner } from './bindings';
 
 // Make React DevTools work
 window.React = React;
@@ -27,7 +28,13 @@ function render() {
 }
 onUpdate(render);
 
-page('/list/:id', context =>
-  stateRef.cursor().set('listId', context.params.id));
+page('/list/:id', context => {
+  bindSharedList();
+  bindListOwner(context.params.id);
+  stateRef.cursor().set('listId', context.params.id);
+});
+page('/', () => {
+  bindMyList();
+});
 page('/*', render);
 page.start();
