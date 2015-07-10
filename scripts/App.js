@@ -17,10 +17,8 @@ function onSubmit(e, user, state) {
   }
 }
 
-const App = component(({
-  user, state
-}) => {
-  let isLoggedIn = !!user.get('authData');
+const App = component(({user, state}) => {
+  const isLoggedIn = !!user.get('authData');
   return state.get('isInitialized') ?
     <div>
       {isLoggedIn && <ShareListButton />}

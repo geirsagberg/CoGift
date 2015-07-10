@@ -11,7 +11,11 @@ firebase.onAuth(authData => {
       let userId = snapshot.val();
       if (!userId) {
         // User does not exist in Firebase; Add new user mapped to provider
-        const user = firebase.child(`users`).push();
+        const userInfo = authData[authData.provider];
+        const displayName = userInfo.displayName;
+        const email = userInfo.email;
+        const userData = {displayName, email, userMappings: {[authData.provider]: authData.uid}};
+        const user = firebase.child('users').push(userData);
         userId = user.key();
         user.child(`userMappings/${authData.provider}`).set(authData.uid);
         firebase.child(`userMappings/${authData.uid}`).set(userId);

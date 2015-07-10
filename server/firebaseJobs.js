@@ -11,7 +11,7 @@ function shareList({token, to, userId}, jobRef) {
     .then(data => {
       jobRef.update({status: 'inProgress'});
       const user = data.val();
-      const name = `${user.firstName} ${user.lastName}`;
+      const name = user.displayName;
       const subject = `${name} has shared a wishlist with you`;
       const listUrl = urlJoin(serverUrl, 'list', token);
       const body = `${name} has shared a wishlist with you.\n\nGo to ${listUrl} to see the list.`;

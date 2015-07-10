@@ -1,0 +1,34 @@
+functions:
+- isLoggedIn(): auth.uid !== null
+
+schema:
+  type: object
+  additionalProperties: false
+  properties:
+    users:
+      type: object
+      $userId:
+        type: object
+        properties:
+          displayName: {type: string}
+          email: {type: string}
+          userMappings:
+            type: object
+            $provider: {type: string}
+          gifts:
+            type: object
+            $giftId:
+              type: object
+              additionalProperties: false
+              required: [title]
+              properties:
+                title: {type: string}
+    jobs:
+      type: object
+      $jobId:
+        type: object
+        required: [name, userId]
+        properties:
+          name: {type: string}
+          status: {type: string, enum: [inProgress, completed, failed]}
+          userId: {type: string}
