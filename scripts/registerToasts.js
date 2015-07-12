@@ -2,6 +2,7 @@ import toastr from 'toastr';
 import {onAuth} from './appState';
 import firebase from '../common/firebase';
 import {encodeHtml} from '../common/utils';
+import NProgress from 'nprogress';
 
 toastr.options = {
   positionClass: 'toast-bottom-full-width'
@@ -12,6 +13,7 @@ let unbind;
 function onLogin(userId) {
   const notifications = firebase.child(`users/${userId}/notifications`);
   notifications.on('child_added', snapshot => {
+    NProgress.done();
     const notification = snapshot.val();
     switch (notification.type) {
       case 'success':
