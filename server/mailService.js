@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import {isValidEmail} from '../common/utils';
-import * as jsend from './jsend';
 
 var user = process.env.COGIFT_MAIL_USER;
 if (!user) {
@@ -27,16 +26,14 @@ export function sendMail({to, subject, body}) {
     text: body
   };
   if (!isValidEmail(to)) {
-    return Promise.reject(jsend.fail({
-      to: 'Invalid email address'
-    }));
+    return Promise.reject('Invalid email address');
   }
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        reject(jsend.error(error));
+        reject(error);
       } else {
-        resolve(jsend.success(info.response));
+        resolve(info.response);
       }
     });
   });

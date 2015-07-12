@@ -1,20 +1,17 @@
 import 'babel/polyfill';
 import React from 'react';
 import App from './App';
-import toastr from 'toastr';
 import Pace from 'pace';
 import page from 'page';
 import { onUpdate, userRef, stateRef } from './appState';
 import { bindMyList, bindSharedList, bindListOwner } from './bindings';
+import './registerToasts';
 
 // Make React DevTools work
 window.React = React;
 
 require('vex').defaultOptions.className = 'vex-theme-default';
 
-toastr.options = {
-  positionClass: 'toast-bottom-full-width'
-};
 Pace.options = {
   ajax: {
     trackMethods: ['GET', 'POST', 'DELETE', 'PUT']
@@ -27,6 +24,7 @@ function render() {
     state={stateRef.cursor()} />, document.getElementById('main'));
 }
 onUpdate(render);
+
 
 page('/list/:id', context => {
   bindSharedList();

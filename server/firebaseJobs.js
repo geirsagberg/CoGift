@@ -7,22 +7,23 @@ const jobs = firebaseRef.child('jobs');
 
 function shareList({to, userId}, jobRef) {
   const userRef = firebaseRef.child(`users/${userId}`);
+  const notifications = userRef.child('notifications');
   userRef.once('value')
     .then(data => {
-      jobRef.update({status: 'inProgress'});
       const user = data.val();
       const name = user.displayName;
-      const subject = `${name} has shared a wishlist with you`;
+      const subject = `${name} has shared a wish list with you`;
       const listUrl = urlJoin(serverUrl, 'list', userId);
-      const body = `${name} has shared a wishlist with you.\n\nGo to ${listUrl} to see the list.`;
-      return sendMail({to: to, subject, body});
+      const body = `${name} has shared a wish list with you.\n\nGo to ${listUrl} to see the list.`;
+      return jobRef.update({status: 'inProgress'})
+      .then(() => sendMail({to: to, subject, body}));
     })
-    .then(() => {
-      return jobRef.update({status: 'completed'});
-    })
+    .then(() => jobRef.update({status: 'completed'}))
+    .then(() => notifications.push({type: 'success', message: 'Wish list shared with ' + to}))
     .catch(error => {
-      console.log('Error when handling job: ' + error);
-      jobRef.update({status: 'failed', error});
+      console.log('Error when handling job: ', error);
+      return jobRef.update({status: 'failed', error})
+      .then(() => notifications.push({type: 'error', message: `Failed to share wish list with ${to}: ${error.toString()}`}));
     });
 }
 
@@ -42,7 +43,7 @@ function handleJob(snapshot) {
 
 firebaseRef.onAuth(authData => {
   if (!authData) {
-    jobs.off('child_added');
+    jobs.off('child_added', handleJob);
   } else {
     jobs.on('child_added', handleJob);
   }

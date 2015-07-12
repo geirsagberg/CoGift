@@ -10,4 +10,14 @@ export const userRef = structure.reference('user');
 
 export const stateRef = structure.reference('state');
 
+export function onAuth(loginCallback, logoutCallback) {
+  const userIdRef = structure.reference(['user', 'userId']);
+  userIdRef.observe('add', () => {
+    loginCallback(userIdRef.cursor().deref());
+  });
+  userIdRef.observe('delete', () => {
+    logoutCallback(userIdRef.cursor().deref());
+  });
+}
+
 export default { onUpdate, userRef, stateRef, structure };

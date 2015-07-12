@@ -1,18 +1,18 @@
 /* eslint-disable no-extend-native */
 export function encodeHtml(html) {
-	return html.replace('&', '&amp;')
-		.replace('"', '&quot;')
-		.replace("'", '&#39;')
-		.replace('<', '&lt;')
-		.replace('>', '&gt;');
+	return String(html).replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
 }
 
 export function decodeHtml(html) {
-	return html.replace('&amp;', '&')
-		.replace('&quot;', '"')
-		.replace('&#39;', "'")
-		.replace('&lt;', '<')
-		.replace('&gt;', '>');
+	return String(html).replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
 }
 
 export function isValidEmail(email) {

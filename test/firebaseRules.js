@@ -4,6 +4,7 @@ import request from 'request-promise';
 chai.use(targaryen.chai);
 import FirebaseTokenGenerator from 'firebase-token-generator';
 import {firebaseSecret} from '../server/config';
+import {assign} from 'lodash';
 
 const tokenGenerator = new FirebaseTokenGenerator(firebaseSecret);
 const token = tokenGenerator.createToken({
@@ -59,8 +60,8 @@ const googleUser1 = {uid: 'google:1', provider: 'google'};
 const googleUser2 = {uid: 'google:2', provider: 'google'};
 
 describe('Firebase Security Rules', () => {
-  it('should allow anyone to read gifts', () => {
-    expect(targaryen.users.unauthenticated).can.read.path('users/user_1/gifts/gift_1/title');
+  it('should allow authenticated users to read gifts', () => {
+    expect(googleUser2).can.read.path('users/user_1/gifts/gift_1/title');
   });
   it('should allow an authenticated login to create a user', () => {
     expect(googleUser1).can.write.to.path('users/user_1');
@@ -71,5 +72,10 @@ describe('Firebase Security Rules', () => {
   it('should allow a user to add job with name and userId', () => {
     const shareListJob = {to: 'mail@example.com', name: 'shareList', userId: 'user_1'};
     expect(googleUser1).can.write(shareListJob).to.path('jobs/1');
+    expect(googleUser1).cannot.write(assign({}, shareListJob, {name: null})).to.path('jobs/1');
+    expect(googleUser1).cannot.write(assign({}, shareListJob, {userId: null})).to.path('jobs/1');
+  });
+  it('should allow a user to read its own messages', () => {
+    expect(googleUser1).can.read.path('users/user_1/notifications');
   });
 });
