@@ -6,11 +6,15 @@ import page from 'page';
 import { onUpdate, userRef, stateRef } from './appState';
 import { bindMyList, bindSharedList, bindListOwner } from './bindings';
 import './registerToasts';
+import $ from 'jquery';
+import attachFastClick from 'fastclick';
 
 // Make React DevTools work
 window.React = React;
 
 require('vex').defaultOptions.className = 'vex-theme-default';
+
+$(() => attachFastClick(document.body));
 
 Pace.options = {
   ajax: {
