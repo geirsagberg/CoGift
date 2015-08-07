@@ -27,6 +27,7 @@ var bundlerOptions = {
 
 const ASSETS_FOLDERS = ['html/**/*.*', 'favicons/**/*.*'];
 const DEST_FOLDER = 'public';
+const DEST_CSS_FOLDER = 'public/css';
 
 function clean(done) {
   del('public', done);
@@ -94,6 +95,12 @@ function watchScripts() {
   return rebundle();
 }
 
+function copyFonts() {
+  return gulp.src('icomoon/fonts/**', { base: 'icomoon' })
+    .pipe(changed(DEST_CSS_FOLDER))
+    .pipe(gulp.dest(DEST_CSS_FOLDER));
+}
+
 function copyStatics() {
   return gulp.src(ASSETS_FOLDERS)
     .pipe(changed(DEST_FOLDER))
@@ -137,10 +144,10 @@ gulp.task(compileScripts);
 gulp.task(watchScripts);
 gulp.task(startServer);
 gulp.task(copyStatics);
-gulp.task('watchServer', gulp.series(copyStatics, compileLess,
+gulp.task('watchServer', gulp.series(copyStatics, copyFonts, compileLess,
   gulp.parallel(startServer, startBrowserSyncProxy, watchLess, watchScripts, watchStatics)));
 gulp.task('brackets', gulp.parallel(watchLess, watchScripts));
 
-const build = gulp.series(clean, gulp.parallel(compileLess, compileScripts, copyStatics));
+const build = gulp.series(clean, gulp.parallel(compileLess, compileScripts, copyStatics, copyFonts));
 gulp.task('build', build);
 gulp.task('default', build);

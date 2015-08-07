@@ -1,4 +1,4 @@
-import {structure, stateRef} from './appState';
+import {structure, stateRef, onAuth} from './appState';
 import firebase from '../common/firebase';
 import {bindArrayToCursor, bindObjectToCursor} from './firebaseCursor';
 

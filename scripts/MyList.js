@@ -17,7 +17,6 @@ function onSubmit(e, user, state) {
 export default component(({user, state}) => {
   return (
   <div className='listWrapper'>
-    <ShareListButton />
     <form onSubmit={e => onSubmit(e, user, state)}>
       <input className='giftInput' onChange={e => state.set('text', e.currentTarget.value)} value={state.get('text')} />
     </form>

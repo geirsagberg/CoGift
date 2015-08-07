@@ -20,4 +20,7 @@ function shareListDialog() {
   });
 }
 
-export default component(() => <button type='button' className='btn' onClick={shareListDialog}>Share list</button>).jsx;
+export default component(() =>
+  <button type='button' className='btn' onClick={shareListDialog}>
+    <span className='icon icon-share2' />Share
+  </button>).jsx;

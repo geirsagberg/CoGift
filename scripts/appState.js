@@ -1,6 +1,11 @@
 import immstruct from 'immstruct';
 
-export const structure = immstruct('CoGift', {});
+export const structure = immstruct('CoGift', {
+  pages: [
+    { title: 'My list' },
+    { title: 'Shared lists' }
+  ]
+});
 
 export function onUpdate(callback) {
 	structure.on('next-animation-frame', callback);

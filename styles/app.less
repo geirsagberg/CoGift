@@ -1,7 +1,7 @@
 @import '//fonts.googleapis.com/css?family=Lato';
 @import (inline) 'npm://normalize.css/normalize';
 @import (inline) 'npm://vex-js/css/vex';
-@import (inline) 'npm://vex-js/css/vex-theme-default';
+@import (inline) 'npm://vex-js/css/vex-theme-top';
 @import (inline) 'npm://nprogress/nprogress';
 @import 'nprogress';
 @import 'npm://toastr/toastr.less';
@@ -9,6 +9,7 @@
 @import 'pace';
 @import 'colors';
 @import 'loadingSpinner';
+@import (inline) '../icomoon/style.css';
 * {
   box-sizing: border-box;
 }
@@ -16,22 +17,23 @@
 body {
   font-family: 'Lato', sans-serif;
   background: @cogift-background;
+  color: @cogift-foreground;
 }
 
-.main {
-  text-align: center;
+.app {
   margin: 0 auto;
   max-width: 500px;
-  padding: 24px 12px;
+  padding: 0 12px;
   font-size: 130%;
   color: @cogift-foreground;
+  text-align: center;
 }
 
 .list {
   list-style: none;
   padding: 0;
-  color: @cogift-foreground;
   text-align: left;
+  color: @cogift-foreground;
   margin: 16px 0;
 }
 
@@ -61,14 +63,46 @@ body {
 
 .btn {
   background: none;
-  border: none;
+  border: 1px solid @cogift-accent;
   color: @cogift-accent;
   border-radius: 3px;
-  margin: 12px;
+  margin: 12px 6px;
+  padding: 6px;
   &:hover {
     background: rgba(0, 0, 0, 0.1);
   }
   &:active {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
   }
+}
+
+.icon {
+  margin-right: 5px;
+  margin-left: 2px;
+  font-size: 90%;
+}
+
+.navBar {
+  border-bottom: 1px solid @cogift-foreground;
+  color: @cogift-accent;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+}
+
+.navButtons {
+  display: inline-block;
+}
+
+.navItem {
+  display: inline-block;
+  padding: 12px;
 }

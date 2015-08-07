@@ -1,11 +1,27 @@
-import {bindAsArray, bindAsObject, unbind} from '../common/firebase';
+import firebase, {bindAsArray, bindAsObject, unbind} from '../common/firebase';
+
+function bindCursorOnAuth(firebaseRef, cursor, bind) {
+  firebase.onAuth(authData => {
+    if(authData){
+      bind(firebaseRef, cursor);
+    } else {
+      unbind(firebaseRef);
+    }
+  });
+}
+
+function bindArray(firebaseRef, cursor) {
+  bindAsArray(firebaseRef, array => cursor.update(() => array));
+}
 
 export function bindArrayToCursor(firebaseRef, cursor) {
-  bindAsArray(firebaseRef, array => cursor.update(() => array));
-  return () => unbind(firebaseRef);
+  bindCursorOnAuth(firebaseRef, cursor, bindArray);
+}
+
+function bindObject(firebaseRef, cursor) {
+  bindAsObject(firebaseRef, obj => cursor.update(() => obj));
 }
 
 export function bindObjectToCursor(firebaseRef, cursor) {
-  bindAsObject(firebaseRef, obj => cursor.update(() => obj));
-  return () => unbind(firebaseRef);
+  bindObject(firebaseRef, cursor, bindObject);
 }
