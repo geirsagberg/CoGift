@@ -14,7 +14,7 @@ window.React = React;
 
 require('vex').defaultOptions.className = 'vex-theme-top';
 
-$(() => attachFastClick(document.body));
+//$(() => attachFastClick(document.body));
 
 Pace.options = {
   ajax: {
