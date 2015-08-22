@@ -25,3 +25,5 @@ export function error(message, {code, data}) {
     data
   };
 }
+
+export default {fail, success, error};

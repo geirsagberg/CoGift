@@ -60,9 +60,17 @@ function prepareBundler(bundler) {
   return bundler;
 }
 
+function makeArrayLoop(_arguments) {
+  var args = [];
+  for (var i = 0; i < _arguments.length; i++) {
+    args.push(_arguments[i]);
+  }
+  return args;
+}
+
 function notifyError(description) {
   return function() {
-    var args = [].slice.call(arguments);
+    var args = makeArrayLoop(arguments); // Convert arguments to proper array
     notify.onError({
       title: description + ' error',
       message: '<%= error.message %>'
