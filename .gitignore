@@ -185,3 +185,7 @@ FakesAssemblies/
 lib/
 
 public/
+
+# VSCode
+.settings/
+.vscode/
