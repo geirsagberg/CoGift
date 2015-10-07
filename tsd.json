@@ -6,31 +6,31 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "jquery/jquery.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "bootstrap/bootstrap.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "node/node.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "express/express.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "gulp/gulp.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "browserify/browserify.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "browser-sync/browser-sync.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "react/react.d.ts": {
-      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "bluebird/bluebird.d.ts": {
-      "commit": "304a25197990aeabf8e9fd030ad927ed011b9e83"
+      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     }
   }
 }

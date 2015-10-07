@@ -49,8 +49,8 @@ function prepareBundler(bundler) {
   bundler.add('scripts/index.js')
     .transform(require('babelify').configure({
       only: ['scripts', 'views', 'common']
-    }))
-    .transform(require('debowerify'));
+    }));
+    // .transform(require('debowerify'));
   if (isProduction) {
     bundler.plugin(require('minifyify'), {
       map: !isProduction && 'index.map.json',

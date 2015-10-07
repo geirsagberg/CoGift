@@ -2,8 +2,8 @@ import immstruct from 'immstruct';
 
 export const structure = immstruct('CoGift', {
   pages: [
-    { title: 'My list' },
-    { title: 'Shared lists' }
+    { title: 'My list', url: '/' },
+    { title: 'Shared lists', url: '/shared' }
   ]
 });
 

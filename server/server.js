@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.get('/list/:id', (request, response) => {
+app.get('/*', (request, response) => {
   response.sendFile('index.html', {root: './public'});
 });
 

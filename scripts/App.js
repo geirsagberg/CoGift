@@ -1,5 +1,4 @@
 import LogInButton from './LogInButton';
-import LogOutButton from './LogOutButton';
 import component from 'omniscient';
 import LoadingSpinner from './LoadingSpinner';
 import './firebaseAuth';
