@@ -2,7 +2,7 @@ import 'babel/polyfill';
 import React from 'react';
 import App from './App';
 import Pace from 'pace';
-import page from 'page';
+var page = require('page');
 import { onUpdate, userRef, stateRef, structure } from './appState';
 import { bindMyList, bindSharedList, bindListOwner } from './bindings';
 import './registerToasts';
